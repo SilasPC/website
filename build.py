@@ -17,15 +17,19 @@ for f in listdir(src_dir):
 cache = dict()
 def foo(p):
 	if cache.get(p) == 0:
-		raise "Cyclical template"
+		raise Exception("Cyclical template")
 	y = x[p]
 	cache[p] = 0
 	while True:
 		match = next(re.finditer(r"\{\{(.*)\}\}", y), None)
 		if match:
-			repl = foo(match.group(1).strip())
-			(s,e) = match.span()
-			y = y[:s] + repl + y[e:]
+			try:
+				repl = foo(match.group(1).strip())
+				(s,e) = match.span()
+				y = y[:s] + repl + y[e:]
+			except:
+				print(f"... evaluating {p}")
+				raise
 		else:
 			break
 	cache[p] = y
