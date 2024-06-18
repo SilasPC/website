@@ -79,6 +79,18 @@
 
 <script>
 
+	for (let el of document.querySelectorAll("#navbar a").values()) {
+		if (document.location.pathname.endsWith(el.attributes["href"].value)) {
+			el.classList.add("w3-green")
+			while (el = el.parentElement) {
+				if (el.classList.contains("w3-dropdown-hover")) {
+					el.children[0].classList.add("w3-green")
+				}
+			}
+			break
+		}
+	}
+
 	let menuOpen = false
 	const overlay = document.getElementById("overlay")
 	const menuDropdown = document.getElementById("menu-content")

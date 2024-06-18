@@ -16,6 +16,7 @@ def read_srcs(dir):
 			continue
 		with open(path) as fd:
 			x[f] = fd.read()
+read_srcs(src_dir)
 
 cache = dict()
 def foo(p):
