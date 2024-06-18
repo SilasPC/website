@@ -8,11 +8,14 @@ src_dir="src"
 out_dir="out"
 
 x = dict()
-for f in listdir(src_dir):
-	path = join(src_dir, f)
-	if not isfile(path): continue
-	with open(path) as fd:
-		x[f] = fd.read()
+def read_srcs(dir):
+	for f in listdir(dir):
+		path = join(dir, f)
+		if not isfile(path):
+			read_srcs(path)
+			continue
+		with open(path) as fd:
+			x[f] = fd.read()
 
 cache = dict()
 def foo(p):
