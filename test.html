@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<style>
+	#navbar {
+  background-color: #333; /* Black background color */
+  position: fixed; /* Make it stick/fixed */
+  top: 0; /* Stay on top */
+  width: 100%; /* Full width */
+  transition: top 0.3s; /* Transition effect when sliding down (and up) */
+}
+</style>
+
+	<script>
+
+var prevScrollpos = window.pageYOffset;
+window.onscroll = function() {
+  var currentScrollPos = window.pageYOffset;
+  if (prevScrollpos > currentScrollPos) {
+    document.getElementById("navbar").style.top = "-50px";
+  } else {
+    document.getElementById("navbar").style.top = "0";
+  }
+  prevScrollpos = currentScrollPos;
+}
+
+	</script>
+	<body>
+		<div id="navbar" style="min-height: 50px; background-color: grey;"></div>
+		<div style="min-height: 200vh;"></div>
+	</body>
+</html>
