@@ -1,6 +1,8 @@
 #!/bin/python3
 
+
 import re
+from pathlib import Path
 from os import listdir, read
 from os.path import isfile, join
 
@@ -9,14 +11,15 @@ out_dir="out"
 
 x = dict()
 def read_srcs(dir):
-	for f in listdir(dir):
-		path = join(dir, f)
+	for f in listdir(join(src_dir, dir)):
+		name = join(dir, f)
+		path = join(src_dir, name)
 		if not isfile(path):
-			read_srcs(path)
+			read_srcs(name)
 			continue
 		with open(path) as fd:
-			x[f] = fd.read()
-read_srcs(src_dir)
+			x[name] = fd.read()
+read_srcs("")
 
 cache = dict()
 def foo(p):
@@ -37,7 +40,9 @@ def foo(p):
 		else:
 			break
 	cache[p] = y
-	with open(join(out_dir, p), mode="w") as fd:
+	path = join(out_dir, p)
+	Path(path).parent.mkdir(parents=True, exist_ok=True)
+	with open(path, mode="w") as fd:
 		fd.write(y)
 	return y
 

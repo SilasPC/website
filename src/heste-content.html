@@ -1,0 +1,49 @@
+
+<div id="horse-btns" class="w3-bar w3-dark-grey">
+	<button --data-name="boy" class="w3-button w3-bar-item">Boy Boy Star M</button>
+	<button --data-name="magic" class="w3-button w3-bar-item">Forever Magic</button>
+	<button --data-name="geo" class="w3-button w3-bar-item">Geronimo d' Hello</button>
+	<button --data-name="race" class="w3-button w3-bar-item">Racing Devil</button>
+	<button --data-name="dijkstra" class="w3-button w3-bar-item">HO Dijkstra ox</button>
+	<button --data-name="sartre" class="w3-button w3-bar-item">HO Sartre ox</button>
+	<button --data-name="lego" class="w3-button w3-bar-item">Legolas</button>
+	<button --data-name="marlon" class="w3-button w3-bar-item">Marlon B ox</button>
+	<button --data-name="midnight" class="w3-button w3-bar-item">Miss Midnight K ox</button>
+	<button --data-name="tarikh" class="w3-button w3-bar-item">Tarikh</button>
+	<button --data-name="jalva" class="w3-button w3-bar-item">Tornhøjs Jalva</button>
+	<button --data-name="cheyenne" class="w3-button w3-bar-item">Cheyenne</button>
+</div>
+
+<div id="horse-tabs">
+	{{ heste/boy.html }}
+	{{ heste/magic.html }}
+	{{ heste/geo.html }}
+	{{ heste/race.html }}
+	{{ heste/dijkstra.html }}
+	{{ heste/sartre.html }}
+	{{ heste/lego.html }}
+	{{ heste/marlon.html }}
+	{{ heste/midnight.html }}
+	{{ heste/tarikh.html }}
+	{{ heste/jalva.html }}
+	{{ heste/cheyenne.html }}
+</div>
+
+<script>
+const btns = document.getElementById("horse-btns")
+const tabs = document.getElementById("horse-tabs")
+for (let c of btns.children) {
+	c.onclick = showHorse.bind(null, [c.attributes["--data-name"].value])
+}
+function showHorse(name) {
+	for (let c of btns.children) {
+		c.classList.remove("w3-green")
+	}
+	btns.querySelector(`[--data-name="${name}"]`)?.classList.add("w3-green")
+	for (let c of tabs.children) {
+		c.classList.add("w3-hide")
+	}
+	tabs.querySelector(`[--data-name="${name}"]`)?.classList.remove("w3-hide")
+}
+showHorse("boy")
+</script>
