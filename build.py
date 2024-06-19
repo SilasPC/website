@@ -3,7 +3,8 @@
 
 import re
 from pathlib import Path
-from os import listdir, read
+from os.path import relpath
+from os import listdir, path
 from os.path import isfile, join
 
 src_dir="src"
