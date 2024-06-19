@@ -3,6 +3,7 @@
 import re
 from pathlib import Path
 from os.path import relpath
+import yaml
 from os import listdir, path
 import sys
 from os.path import isfile, join
@@ -15,8 +16,11 @@ class dotdict(dict):
     __setattr__ = dict.__setitem__
     __delattr__ = dict.__delitem__
 
-out_dir=sys.argv[1] if len(sys.argv) > 1 else "out"
-src_dir=sys.argv[2] if len(sys.argv) > 2 else "src"
+with open("build.yaml") as f:
+	cfg = yaml.safe_load(f)
+
+out_dir=cfg["out_dir"]
+src_dir=cfg["src_dir"]
 
 sources = dict()
 def read_srcs(dir):
@@ -34,12 +38,16 @@ def read_file(f):
 	with open(f) as f:
 		return f.read()
 
+def read_yaml(f):
+	with open(f) as f:
+		return yaml.safe_load(f)
+
 def render(p, **kwargs):
 	y = None
 	try:
 		y = sources[p]
 	except:
-		raise f"No such source file {p}"
+		raise Exception(f"No such source file {p}")
 	while True:
 		match = next(re.finditer(r"\{\{(.*)\}\}", y), None)
 		if match:
@@ -60,6 +68,7 @@ def render(p, **kwargs):
 				data = {
 					"render": render,
 					"read_file": read_file,
+					"read_yaml": read_yaml,
 					"this": p,
 					"output": "",
 					"args": dotdict(kwargs),
@@ -87,8 +96,12 @@ def render(p, **kwargs):
 	return y
 
 for p in sources.keys():
-	if Path(p).name.startswith("_"): continue
-	if not p.endswith(".html"): continue
+	no_render = False
+	for exclude in cfg["exclude_render"]:
+		if p.startswith(exclude):
+			no_render = True
+			break
+	if no_render: continue
 	try:
 		render(p)
 	except Exception as e:

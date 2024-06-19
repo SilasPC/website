@@ -1,0 +1,6 @@
+src_dir: src
+out_dir: out
+exclude_render:
+- component/
+- content/
+- heste/
