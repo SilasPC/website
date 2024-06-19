@@ -5,16 +5,17 @@
 	<div class="w3-row w3-auto">
 		<div class="w3-col l6 m6 w3-padding">
 
-			<div>
-				<span>Hyg med hest Hold u. 7 år 40 minutter
-					(fra august 2024)</span>
-				<span class="w3-right">400 kr</span>
-			</div>
-			<p>Fast månedspris 10 måneder pr. år</p>
-
-			<hr/>
-
-			<p>TODO</p>
+{!%
+template = """
+<div>
+	<h3 style="display: inline-block;">%s</h3>
+	<span class="w3-right"><b>%s</b></span>
+	<p>%s</p>
+	<p>%s</p>
+</div>
+"""
+output = "<hr/><br/>".join(map(lambda p: template % tuple(p), args.prices))
+%}
 
 		</div>
 		<div class="w3-col l6 m6 w3-padding">

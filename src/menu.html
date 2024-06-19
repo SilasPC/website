@@ -67,6 +67,7 @@
 						<a href="/familie.html" class="w3-button w3-bar-item">Om os</a>
 						<a href="/heste.html" class="w3-button w3-bar-item">Vores heste</a>
 						<a href="/tidligere-heste.html" class="w3-button w3-bar-item">Tidligere heste</a>
+						<a href="/årsbog.html" class="w3-button w3-bar-item">Årsbog</a>
 					</div>
 				</div>
 				<div class="w3-dropdown-hover w3-right">
@@ -92,7 +93,7 @@
 <script>
 
 	for (let el of document.querySelectorAll("#navbar a").values()) {
-		if (document.location.pathname == el.attributes.href.value) {
+		if (decodeURI(document.location.pathname) == el.attributes.href.value) {
 			el.classList.add("w3-green")
 			while (el = el.parentElement) {
 				if (el.classList.contains("w3-dropdown-hover")) {
