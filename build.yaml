@@ -1,5 +1,6 @@
 src_dir: src
 out_dir: out
+global_args: {}
 exclude_render:
 - component/
 - content/

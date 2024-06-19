@@ -106,3 +106,6 @@ for p in sources.keys():
 	except Exception as e:
 		print(e)
 		sys.exit(1)
+
+Path(out_dir, "static").unlink(missing_ok=True)
+Path(out_dir, "static").symlink_to(Path("static").absolute(), target_is_directory=True)
