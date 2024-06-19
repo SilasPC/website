@@ -1,0 +1,49 @@
+<style>
+
+#sidenav {
+	right: 0;
+}
+
+</style>
+
+<div class="w3-sidebar w3-hide-medium w3-hide-large w3-bar-block w3-border-left w3-hide" id="sidenav">
+	<button onclick="toggleSideNav()" class="w3-button w3-right">X</button>
+	<p class="w3-bar-item">Om os</p>
+	<div style="padding-left: 24px;">
+		<a href="/lone.html" class="w3-button w3-bar-item">Om Lone</a>
+		<a href="/teamet.html" class="w3-button w3-bar-item">Om teamet</a>
+		<a href="/familie.html" class="w3-button w3-bar-item">Om os</a>
+		<a href="/årsbog.html" class="w3-button w3-bar-item">Årsbog</a>
+	</div>
+	<p class="w3-bar-item">Information</p>
+	<div style="padding-left: 24px;">
+		<a href="/prisliste.html" class="w3-button w3-bar-item">Prisliste</a>
+		<a href="/heste.html" class="w3-button w3-bar-item">Vores heste</a>
+		<a href="/tidligere-heste.html" class="w3-button w3-bar-item">Tidligere heste</a>
+	</div>
+	<div class="w3-center">
+		<p>Kastaniegård Horse Team</p>
+		<p>
+			<i class="fa fa-location-dot"></i>
+			<a href="https://maps.app.goo.gl/vja1hK6fqW6rR64g9">
+				Kvægholm 16, 4281 Gørlev, Danmark
+			</a>
+		</p>
+		<p>
+			<i class="fa fa-phone"></i>
+			<a href="tel:23203381">+45 23203881</a>
+		</p>
+		<p>
+			<i class="fa fa-envelope"></i>
+			<a href="mailto:kastaniegaard@live.dk">kastaniegaard@live.dk</a>
+		</p>
+
+	</div>
+</div>
+
+<script>
+	const sidenav = document.getElementById("sidenav")
+	function toggleSideNav() {
+		sidenav.classList.toggle("w3-hide")
+	}
+	</script>

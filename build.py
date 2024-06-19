@@ -64,11 +64,15 @@ def render(p, **kwargs):
 					"output": "",
 					"args": dotdict(kwargs),
 				}
-				if match.group(1) == "!":
-					exec(code, data)
-					output = data["output"]
-				else:
-					output = eval(code, data)
+				try:
+					if match.group(1) == "!":
+						exec(code, data)
+						output = data["output"]
+					else:
+						output = eval(code, data)
+				except:
+					print("evaluation error")
+					raise
 				(s,e) = match.span()
 				y = y[:s] + str(output) + y[e:]
 			except:

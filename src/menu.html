@@ -1,20 +1,7 @@
 <style>
-#overlay {
-	z-index: 100;
-	background-color: black;
-	min-width: 100vw;
-	min-height: 100vh;
-	position: fixed;
-	top: 0;
-	left: 0;
-	transition: opacity 0.5s ease-out;
-	pointer-events: none;
-	opacity: 0;
-}
 #navbar {
 	height: 120px;
 	position: absolute;
-	z-index: 110;
 	width: 100%;
 	background-color: #ffffff80;
 	transition: all 0.3s ease-out;
@@ -32,8 +19,6 @@
 }
 
 </style>
-
-<div id="overlay"></div>
 
 <div>
 	<!--div id="navbar-backdrop" style="min-height: 120px;"-->
@@ -59,32 +44,30 @@
 					</div>
 				</div>
 				<!-- RIGHT -->
-				<div class="w3-dropdown-hover w3-right">
+				<div class="w3-hide-small w3-dropdown-hover w3-right">
 					<button class="w3-button">Om os</button>
 					<div class="w3-dropdown-content w3-bar-block w3-card-4">
 						<a href="/lone.html" class="w3-button w3-bar-item">Om Lone</a>
 						<a href="/teamet.html" class="w3-button w3-bar-item">Om teamet</a>
 						<a href="/familie.html" class="w3-button w3-bar-item">Om os</a>
-						<a href="/heste.html" class="w3-button w3-bar-item">Vores heste</a>
-						<a href="/tidligere-heste.html" class="w3-button w3-bar-item">Tidligere heste</a>
 						<a href="/årsbog.html" class="w3-button w3-bar-item">Årsbog</a>
 					</div>
 				</div>
-				<div class="w3-dropdown-hover w3-right">
+				<div class="w3-hide-small w3-dropdown-hover w3-right">
 					<button class="w3-button">Information</button>
 					<div class="w3-dropdown-content w3-bar-block w3-card-4">
-						<a href="/holdliste.html" class="w3-button w3-bar-item">Holdliste</a>
 						<a href="/prisliste.html" class="w3-button w3-bar-item">Prisliste</a>
+						<a href="/heste.html" class="w3-button w3-bar-item">Vores heste</a>
+						<a href="/tidligere-heste.html" class="w3-button w3-bar-item">Tidligere heste</a>
 					</div>
 				</div>
+				<!-- RIGHT SIDENAV BUTTON -->
+				<button onclick="toggleSideNav()" class="w3-button w3-hide-medium w3-hide-large w3-right">MENU</button>
 			</div>
 			<div class="w3-cell-row">
-				<div class="w3-panel w3-cell w3-cell-middle">
+				<div class="w3-panel w3-cell w3-cell-middle" style="overflow: hidden;white-space: nowrap;">
 					<h1>Kastaniegård Endurance Team & Horse Team</h1>
 				</div>
-				<!--div class="w3-cell w3-rest">
-					{{ menu-button.html }}
-				</div-->
 			</div>
 		</div>
 	<!--/div-->
@@ -101,22 +84,6 @@
 				}
 			}
 			break
-		}
-	}
-
-	let menuOpen = false
-	const overlay = document.getElementById("overlay")
-	const menuDropdown = document.getElementById("menu-content")
-	function toggleMenu() {
-		menuOpen ^= true
-		if (menuOpen) {
-			overlay.style.opacity = 0.7
-			//overlay.style.pointerEvents = "all"
-			menuDropdown.classList.add("w3-show")
-		} else {
-			overlay.style.opacity = 0
-			//overlay.style.pointerEvents = "none"
-			menuDropdown.classList.remove("w3-show")
 		}
 	}
 

@@ -5,7 +5,6 @@
 	<button --data-name="geo" class="w3-button w3-bar-item">Geronimo d' Hello</button>
 	<button --data-name="race" class="w3-button w3-bar-item">Racing Devil</button>
 	<button --data-name="dijkstra" class="w3-button w3-bar-item">HO Dijkstra ox</button>
-	<button --data-name="sartre" class="w3-button w3-bar-item">HO Sartre ox</button>
 	<button --data-name="lego" class="w3-button w3-bar-item">Legolas</button>
 	<button --data-name="marlon" class="w3-button w3-bar-item">Marlon B ox</button>
 	<button --data-name="midnight" class="w3-button w3-bar-item">Miss Midnight K ox</button>
@@ -20,7 +19,6 @@
 	{{ heste/geo.html }}
 	{{ heste/race.html }}
 	{{ heste/dijkstra.html }}
-	{{ heste/sartre.html }}
 	{{ heste/lego.html }}
 	{{ heste/marlon.html }}
 	{{ heste/midnight.html }}
@@ -71,6 +69,7 @@ function showDivs(n) {
 <style>
 
 .slideshow > img {
+	z-index: 2;
 	display: none;
 	width: 100%;
 }
