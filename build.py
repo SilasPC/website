@@ -16,8 +16,11 @@ class dotdict(dict):
     __setattr__ = dict.__setitem__
     __delattr__ = dict.__delitem__
 
-with open("build.yaml") as f:
-	cfg = yaml.safe_load(f)
+def read_yaml(f):
+	with open(f) as f:
+		return yaml.safe_load(f)
+
+cfg = read_yaml(sys.argv[1] if len(sys.argv) > 1 else "build.yaml")
 
 out_dir=cfg["out_dir"]
 src_dir=cfg["src_dir"]
@@ -37,10 +40,6 @@ read_srcs("")
 def read_file(f):
 	with open(f) as f:
 		return f.read()
-
-def read_yaml(f):
-	with open(f) as f:
-		return yaml.safe_load(f)
 
 def render(p, **kwargs):
 	y = None
@@ -89,10 +88,6 @@ def render(p, **kwargs):
 				raise
 		else:
 			break
-	path = join(out_dir, p)
-	Path(path).parent.mkdir(parents=True, exist_ok=True)
-	with open(path, mode="w") as fd:
-		fd.write(y)
 	return y
 
 for p in sources.keys():
@@ -103,7 +98,11 @@ for p in sources.keys():
 			break
 	if no_render: continue
 	try:
-		render(p)
+		res = render(p)
+		path = join(out_dir, p)
+		Path(path).parent.mkdir(parents=True, exist_ok=True)
+		with open(path, mode="w") as fd:
+			fd.write(res)
 	except Exception as e:
 		print(e)
 		sys.exit(1)

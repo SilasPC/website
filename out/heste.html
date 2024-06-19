@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<title>Kastaniegård</title>
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+	<meta name="HandheldFriendly" content="true" />
+	<meta name="MobileOptimized" content="320" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+
+	<style>
+
+		:root {
+			--bg-dark: rgb(43, 43, 43);
+		}
+
+		.bg-dark {
+			background-color: var(--bg-dark);
+			color: white;
+		}
+
+		.vcenter {
+			margin: 0;
+			position: absolute;
+			top: 50%;
+			-ms-transform: translateY(-50%);
+			transform: translateY(-50%);
+		}
+
+		.parallax {
+			min-height: 90vh;
+			background-attachment: fixed;
+			background-position: center;
+			background-repeat: no-repeat;
+			background-size: cover;
+		}
+
+		body {
+			background-image: url(https://www.toptal.com/designers/subtlepatterns/uploads/seamless_paper_texture.png);
+			background-repeat: repeat;
+		}
+
+		* {
+			font-family: Metropolis, sans-serif;
+		}
+
+		p {
+			font-size: large;
+		}
+
+		/* metropolis-latin-400-normal */
+		@font-face {
+			font-family: 'Metropolis';
+			font-style: normal;
+			font-display: swap;
+			font-weight: 400;
+			src: url(https://cdn.jsdelivr.net/fontsource/fonts/metropolis@latest/latin-400-normal.woff2) format('woff2'), url(https://cdn.jsdelivr.net/fontsource/fonts/metropolis@latest/latin-400-normal.woff) format('woff');
+		}
+
+	</style>
+
+</head>
+	<body>
+
+		<style>
+
+#sidenav {
+	right: 0;
+}
+
+</style>
+
+<div class="w3-sidebar w3-hide-medium w3-hide-large w3-bar-block w3-border-left w3-hide" id="sidenav">
+	<button onclick="toggleSideNav()" class="w3-button w3-right">X</button>
+	<p class="w3-bar-item">Om os</p>
+	<div style="padding-left: 24px;">
+		<a href="/lone.html" class="w3-button w3-bar-item">Om Lone</a>
+		<a href="/teamet.html" class="w3-button w3-bar-item">Om teamet</a>
+		<a href="/familie.html" class="w3-button w3-bar-item">Om os</a>
+		<a href="/årsbog.html" class="w3-button w3-bar-item">Årsbog</a>
+	</div>
+	<p class="w3-bar-item">Information</p>
+	<div style="padding-left: 24px;">
+		<a href="/prisliste.html" class="w3-button w3-bar-item">Prisliste</a>
+		<a href="/heste.html" class="w3-button w3-bar-item">Vores heste</a>
+		<a href="/tidligere-heste.html" class="w3-button w3-bar-item">Tidligere heste</a>
+	</div>
+	<div class="w3-center">
+		<p>Kastaniegård Horse Team</p>
+		<p>
+			<i class="fa fa-location-dot"></i>
+			<a href="https://maps.app.goo.gl/vja1hK6fqW6rR64g9">
+				Kvægholm 16, 4281 Gørlev, Danmark
+			</a>
+		</p>
+		<p>
+			<i class="fa fa-phone"></i>
+			<a href="tel:23203381">+45 23203881</a>
+		</p>
+		<p>
+			<i class="fa fa-envelope"></i>
+			<a href="mailto:kastaniegaard@live.dk">kastaniegaard@live.dk</a>
+		</p>
+
+	</div>
+</div>
+
+<script>
+	const sidenav = document.getElementById("sidenav")
+	function toggleSideNav() {
+		sidenav.classList.toggle("w3-hide")
+	}
+	</script>
+
+<style>
+	header {
+		color: white;
+	}
+</style>
+
+<header>
+	<div class="w3-bar bg-dark">
+		<button class="w3-button w3-circle w3-bar-item w3-hide-small">
+			<a href="https://www.facebook.com/kastaniendurance">
+				<i class="fa fa-facebook"></i>
+			</a>
+		</button>
+		<div class="w3-bar-item w3-hide-medium w3-hide-small w3-right">
+			<i class="fa fa-envelope"></i>
+			<a href="mailto:kastaniegaard@live.dk">kastaniegaard@live.dk</a>
+		</div>
+		<div class="w3-bar-item w3-hide-small w3-right">
+			<i class="fa fa-phone"></i>
+			<a href="tel:23203881">23203881</a>
+		</div>
+		<div class="w3-bar-item w3-right">
+			<i class="fa fa-info"></i>
+			Åbent hverdage fra 13-20, weekender 8-18
+		</div>
+	</div>
+</header>
+
+		<style>
+#navbar {
+	height: 120px;
+	position: absolute;
+	width: 100%;
+	background-color: #ffffff80;
+	transition: all 0.3s ease-out;
+}
+#navbar.sticky {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	background-color: var(--bg-dark);
+	color: white;
+}
+.w3-dropdown-hover.w3-right .w3-dropdown-content {
+	right: 0;
+}
+
+</style>
+
+<div>
+	<!--div id="navbar-backdrop" style="min-height: 120px;"-->
+		<div id="navbar">
+			<div class="w3-bar">
+				<a href="/home.html" class="w3-button w3-bar-item">Hjem</a>
+				<div class="w3-dropdown-hover">
+					<button class="w3-button">Vi tilbyder</button>
+					<div class="w3-dropdown-content w3-bar-block w3-card-4">
+						<a href="/hesteskole.html" class="w3-button w3-bar-item">Hesteskole</a>
+						<a href="/terapi.html" class="w3-button w3-bar-item">Terapi</a>
+						<a href="/træning.html" class="w3-button w3-bar-item">Træning</a>
+						<a href="/transport.html" class="w3-button w3-bar-item">Hestetransport</a>
+					</div>
+				</div>
+				<div class="w3-dropdown-hover">
+					<button class="w3-button">Distance</button>
+					<div class="w3-dropdown-content w3-bar-block w3-card-4">
+						<a href="/distance-teamet.html" class="w3-button w3-bar-item">Hjælperteamet</a>
+						<a href="/distance-mentor.html" class="w3-button w3-bar-item">DRF mentor</a>
+						<a href="/distance-resultater.html" class="w3-button w3-bar-item">Resultater</a>
+						<a href="/distance-træning.html" class="w3-button w3-bar-item">Træning</a>
+					</div>
+				</div>
+				<!-- RIGHT -->
+				<div class="w3-hide-small w3-dropdown-hover w3-right">
+					<button class="w3-button">Om os</button>
+					<div class="w3-dropdown-content w3-bar-block w3-card-4">
+						<a href="/lone.html" class="w3-button w3-bar-item">Om Lone</a>
+						<a href="/teamet.html" class="w3-button w3-bar-item">Om teamet</a>
+						<a href="/familie.html" class="w3-button w3-bar-item">Om os</a>
+						<a href="/årsbog.html" class="w3-button w3-bar-item">Årsbog</a>
+					</div>
+				</div>
+				<div class="w3-hide-small w3-dropdown-hover w3-right">
+					<button class="w3-button">Information</button>
+					<div class="w3-dropdown-content w3-bar-block w3-card-4">
+						<a href="/prisliste.html" class="w3-button w3-bar-item">Prisliste</a>
+						<a href="/heste.html" class="w3-button w3-bar-item">Vores heste</a>
+						<a href="/tidligere-heste.html" class="w3-button w3-bar-item">Tidligere heste</a>
+					</div>
+				</div>
+				<!-- RIGHT SIDENAV BUTTON -->
+				<button onclick="toggleSideNav()" class="w3-button w3-hide-medium w3-hide-large w3-right">MENU</button>
+			</div>
+			<div class="w3-cell-row">
+				<div class="w3-panel w3-cell w3-cell-middle" style="overflow: hidden;white-space: nowrap;">
+					<h1>Kastaniegård Endurance Team & Horse Team</h1>
+				</div>
+			</div>
+		</div>
+	<!--/div-->
+</div>
+
+<script>
+
+	for (let el of document.querySelectorAll("#navbar a").values()) {
+		if (decodeURI(document.location.pathname) == el.attributes.href.value) {
+			el.classList.add("w3-green")
+			while (el = el.parentElement) {
+				if (el.classList.contains("w3-dropdown-hover")) {
+					el.children[0].classList.add("w3-green")
+				}
+			}
+			break
+		}
+	}
+
+	const scrollHeader = document.getElementById("navbar")
+	const offsetTop = scrollHeader.offsetTop
+	window.onscroll = () => {
+		if (window.pageYOffset > offsetTop) {
+			scrollHeader.classList.add("sticky")
+		} else {
+			scrollHeader.classList.remove("sticky")
+		}
+	}
+
+</script>
+		<div class="parallax" style="background-image: url('https://9f530f7639.clvaw-cdnwnd.com/a470909b67f02e0297289554e1606271/200000647-c3314c3315/_SIP9328-web.webp?ph=9f530f7639');"></div>
+
+		
+<div id="horse-btns" class="w3-bar w3-dark-grey">
+	<button --data-name="boy" class="w3-button w3-bar-item">Boy Boy Star M</button>
+	<button --data-name="magic" class="w3-button w3-bar-item">Forever Magic</button>
+	<button --data-name="geo" class="w3-button w3-bar-item">Geronimo d' Hello</button>
+	<button --data-name="race" class="w3-button w3-bar-item">Racing Devil</button>
+	<button --data-name="dijkstra" class="w3-button w3-bar-item">HO Dijkstra ox</button>
+	<button --data-name="lego" class="w3-button w3-bar-item">Legolas</button>
+	<button --data-name="marlon" class="w3-button w3-bar-item">Marlon B ox</button>
+	<button --data-name="midnight" class="w3-button w3-bar-item">Miss Midnight K ox</button>
+	<button --data-name="tarikh" class="w3-button w3-bar-item">Tarikh</button>
+	<button --data-name="jalva" class="w3-button w3-bar-item">Tornhøjs Jalva</button>
+	<button --data-name="cheyenne" class="w3-button w3-bar-item">Cheyenne</button>
+</div>
+
+<div id="horse-tabs">
+	<div --data-name="boy" class="w3-hide w3-auto">
+	<h1 class="w3-center">Boy Boy Star M</h1>
+	<div class="w3-row-padding">
+		<div class="w3-col m3 l3">
+			<ul>
+				<li>04-05-2024 Intro Odsherred 13 km m. Lone</li>
+				<li>05-11-2023 Boy ankommer til vores team</li>
+			</ul>
+		</div>
+		<div class="w3-col m9 l9 w3-display-container slideshow w3-auto">
+			<img src="https://9f530f7639.clvaw-cdnwnd.com/a470909b67f02e0297289554e1606271/200000553-b62abb62ad/boy.webp?ph=9f530f7639"/>
+			<img src="https://9f530f7639.clvaw-cdnwnd.com/a470909b67f02e0297289554e1606271/200000557-de057de058/700/boy%205-11-23.webp?ph=9f530f7639"/>
+
+			<button class="w3-button w3-display-left w3-black" onclick="plusDivs(-1)">&#10094;</button>
+			<button class="w3-button w3-display-right w3-black" onclick="plusDivs(+1)">&#10095;</button>
+		</div>
+	</div>
+</div>
+	<div --data-name="magic" class="w3-hide w3-auto">
+	<h1 class="w3-center">Forever Magic</h1>
+	<div class="w3-row-padding">
+		<div class="w3-col m4 l4">
+			<img class="w3-image" src="https://9f530f7639.clvaw-cdnwnd.com/a470909b67f02e0297289554e1606271/200000389-ea03aea03c/700/Magic%20kbh%2022%202.webp?ph=9f530f7639"/>
+			Id nummer 208334201700288
+			Født 21-07-2017
+			Opdrætter Anders Pedersen
+			Avlsforbund Dansk Travsports Centralforbund
+			Far FARIFANT (IT)
+			Mor HAPPY MAGIC
+			Morfar BUCKFINDER (US)
+		</div>
+		<div class="w3-col m4 l4">
+			<img class="w3-image" src="https://9f530f7639.clvaw-cdnwnd.com/a470909b67f02e0297289554e1606271/200000391-ebb1aebb1c/kbh%2022%20magic%202.webp?ph=9f530f7639"/>
+			<p>Resultater 2023</p>
+			<p>Sædingegård LB gnf 45 km/Maja</p>
+			<p>Hedeland 55 km gnf</p>
+			<p>Kronborg LC -Lucas</p>
+			<p>Vester Bjørnkær/ Lucas gnf</p>
+			<p>Vestegnen LB Maja W udg</p>
+			<p>Odsherred LD Maja W</p>
+			<p>Mols LB 40 km Maja W gnf</p>
+			<p>Resultater 2022:</p>
+			<p>Odsherred intro 9-10 14 km med Maja</p>
+			<p>Nyminde ridtet 43 km LB med Lone gennemført</p>
+			<p>Københavner ridtet 46 km med Lone Gennemført</p>
+			<p>Introridt Hedeland 13 km med Maja W gennemført</p>
+		</div>
+		<div class="w3-col m4 l4">
+			<img class="w3-image" src="https://9f530f7639.clvaw-cdnwnd.com/a470909b67f02e0297289554e1606271/200000469-b25e8b25ea/maja%20hedeland.webp?ph=9f530f7639"/>
+			<p>Pointgivende km: 269</p>
+			<p>Kval: LA</p>
+			<p>Ikkepointgivende km: 41</p>
+			<p>Andre resultater:</p>
+		</div>
+	</div>
+</div>
+	<div --data-name="geo" class="w3-hide w3-auto">
+	<h1 class="w3-center">Geronimo d' Hello</h1>
+
+	<div class="w3-row-padding">
+
+		<div class="w3-col m6 l6">
+			<img class="w3-image" src="https://9f530f7639.clvaw-cdnwnd.com/a470909b67f02e0297289554e1606271/200000549-c4311c4313/349173271_810150927141758_3506749525172288324_n.webp?ph=9f530f7639"/>
+		</div>
+		<div class="w3-col m6 l6">
+			<p>Geronimo 6 år og fransk traver. Ankomst 7-12 2022. Har gået trav. Egner sig ikke da han bliver for stresset.</p>
+			<p>2023 Sædinge LB 45 km med Linn gnf.</p>
+			<p>2023 Hedeland LB 41 km med Linn gnf.</p>
+			<p>2023 Rom LB 43 km med Linn gnf.</p>
+			<p>2023 Vestegn LB 47 km med Linn gnf</p>
+			<p>2023 Slagelse Ridt 32 km med Linn  gnf</p>
+			<p>2023 Sorø Intro 12 km med Maja H gnf</p>
+		</div>
+	</div>
+</div>
+	<div --data-name="race" class="w3-hide w3-auto">
+	<h1 class="w3-center">Racing Devil</h1>
+</div>
+	<div --data-name="dijkstra" class="w3-hide w3-auto">
+	<h1 class="w3-center">HO Dijkstra ox</h1>
+	<div class="w3-row-padding">
+		<div class="w3-col m4 l4">
+			<img class="w3-image" src="https://9f530f7639.clvaw-cdnwnd.com/a470909b67f02e0297289554e1606271/200000490-88af488af6/Dijkstra.webp?ph=9f530f7639"/>
+			<p>Dijkstra er fra 1-6 solgt til en god veninde</p>
+		</div>
+		<div class="w3-col m4 l4">
+			<img class="w3-image" src="https://9f530f7639.clvaw-cdnwnd.com/a470909b67f02e0297289554e1606271/200000419-bd114bd116/11-22%207.webp?ph=9f530f7639"/>
+			<p>Hingsteføl fra Stutteri Holm født 5-5 2021</p>
+			<p>Købt hertil 24-5 2021</p>
+			<p>Mor og barn ankom d. 13-6 2021 og der blev sat grime på.</p>
+			<p>25-6 opdager vi at Dijkstra skimler</p>
+		</div>
+		<div class="w3-col m4 l4">
+			<img class="w3-image" src="https://9f530f7639.clvaw-cdnwnd.com/a470909b67f02e0297289554e1606271/200000491-a802aa802c/f%C3%B8l%2021%201%20%282%29.webp?ph=9f530f7639"/>
+			<p>Resultater:</p>
+			<p>11-6 22 Arabische Pferde Westphalen</p>
+			<p>klasse unge hingste 1 år: Klassevinder med 36.7 point</p>
+		</div>
+	</div>
+</div>
+	<div --data-name="lego" class="w3-hide w3-auto">
+	<h1 class="w3-center">Legolas</h1>
+
+	<div class="w3-row-padding">
+
+		<div class="w3-col m4 l4">
+			<img class="w3-image" src="https://9f530f7639.clvaw-cdnwnd.com/a470909b67f02e0297289554e1606271/200000492-533da533dc/700/lego%2022%20vester%20bj%C3%B8rnk%C3%A6r.webp?ph=9f530f7639"/>
+			<p>Id nummer 208333200711181</p>
+			<p>Født 01-01-2007 </p>
+		</div>
+
+		<div class="w3-col m4 l4">
+			<img class="w3-image" src="https://9f530f7639.clvaw-cdnwnd.com/a470909b67f02e0297289554e1606271/200000494-57dc057dc2/maja%20lego%202.webp?ph=9f530f7639"/>
+
+			<p>Resultater</p>
+			<p>2024</p>
+			<p>4-5 Odsherred intro 13 km med Maja R</p>
+			<p>2022:</p>
+			<p>Nr. 3 på ranglisten i RKVS/Lone</p>
+			<p>9-10 Odsherred intro 14 km med Linn</p>
+			<p>20-8 Hedeland LC gnf 20 km</p>
+			<p>26-3 Vester Bjørnkær LB43 km gnf</p>
+			<p>Holbergridtet intro gnf  12 km</p>
+			<p>Hedeland intro gnf 13 km</p>
+			<p>2021:</p>
+			<p>4-9 Københavnerridtet LB 43 km gnf</p>
+
+		</div>
+
+		<div class="w3-col m4 l4">
+			<img class="w3-image" src="https://9f530f7639.clvaw-cdnwnd.com/a470909b67f02e0297289554e1606271/200000493-f010bf010e/700/Legolas%201.webp?ph=9f530f7639"/>
+			<p>Særlige resultater</p>
+			<p>Pointgivende km: : 86</p>
+			<p>Ikke pointgivende km: 59</p>
+		</div>
+	</div>
+</div>
+	<div --data-name="marlon" class="w3-hide w3-auto">
+	<h1 class="w3-center">Marlon B ox</h1>
+
+	<div class="w3-row-padding">
+
+		<div class="w3-col m4 l4">
+			<img class="w3-image" src="https://9f530f7639.clvaw-cdnwnd.com/a470909b67f02e0297289554e1606271/200000463-c1b71c1b74/700/SIP_4207%20full.webp?ph=9f530f7639"/>
+				<p>Om Marlon</p>
+				<p>Id nummer 208336OX1105432</p>
+				<p>Født 13-06-2011</p>
+				<p>Type Hest</p>
+				<p>Opdrætter Cauzar Arabians Gitte Dybelund</p>
+				<p>Avlsforbund Arabisk Fuldblod ox</p>
+				<p>Far EL SID OX</p>
+				<p>Mor BINT EL MARINKA OX</p>
+				<p>Morfar WAN-KAHLI OX</p>
+			<img class="w3-image" src="https://9f530f7639.clvaw-cdnwnd.com/a470909b67f02e0297289554e1606271/200000453-57e4257e44/SIP_4582-web.webp?ph=9f530f7639"/>
+		</div>
+
+		<div class="w3-col m4 l4">
+			<img class="w3-image" src="https://9f530f7639.clvaw-cdnwnd.com/a470909b67f02e0297289554e1606271/200000460-5fab15fab4/700/_SIP9276-web.webp?ph=9f530f7639"/>
+			<p>Resultater og Kvalifikationer</p>
+			<p>2022</p>
+			<p>Nr. 1 på ranglisten RKVS/Lone</p>
+			<p>15-9 Nordslesvigske LA 55 km gnf.</p>
+			<p>20-8 Hedeland LA 55 km udgået grundet gnav</p>
+			<p>6-5 Skive Pinseridt LB 47 km nr. 2</p>
+			<p>2021</p>
+			<p>28-6 Vestegnsridtet LB 68 nr. 1</p>
+			<p>2020</p>
+			<p>26-9 Nordslevigske MA 85 km gnf</p>
+			<p>1-8 Vester Bjørnkær LA 53 gnf</p>
+			<p>11-7 Rom LA 60 km gnf</p>
+			<p>2019</p>
+			<p>25-8 Kronborg LA 50 km gnf</p>
+			<p>2018</p>
+			<p>29-9 CEI* 82 km gnf</p>
+			<p>23-6 MA 80 km gnf</p>
+			<p>18-3 Feldborg MA 80 km gnf</p>
+			<p>2017</p>
+			<p>2-12 Juleridtet LA 53 km gnf</p>
+			<p>30-9 Blåbjerg LA RET</p>
+			<p>9-9 Hedeland LB 59 km gnf</p>
+			<p>19-8 Ribe LB 40 km gnf</p>
+			<p>15-7 Rom LB 43 km gnf</p>
+			<p>23-4 Kronborg LB 36 km nr. 3</p>
+			<p>9-4 Vestegnsridtet LB 44 km gnf</p>
+			<p>2016</p>
+			<p>10-9 Mols Bjerge LB 40 km nr. 2</p>
+			<p>27-8 Hedelandsridtet LB 46 km nr. 4</p>
+		</div>
+
+		<div class="w3-col m4 l4">
+			<img class="w3-image" src="https://9f530f7639.clvaw-cdnwnd.com/a470909b67f02e0297289554e1606271/200000500-b148eb1491/700/marlonb.webp?ph=9f530f7639"/>
+				<p>Karakteristik</p>
+				<p>Ialt km</p>
+				<p>2016: 86</p>
+				<p>2017: 275</p>
+				<p>2018: 242</p>
+				<p>2019: 50</p>
+				<p>2020: 198</p>
+				<p>2021: 68</p>
+				<p>2022: 102</p>
+				<p>Ialt: 1021 pointgivende km</p>
+				<p>YR CUP 2017 nr. 1</p>
+				<p>YR rangliste 2017 nr. 1</p>
+				<p>YR rangliste 2021 nr. 4</p>
+			<img class="w3-image" src="https://9f530f7639.clvaw-cdnwnd.com/a470909b67f02e0297289554e1606271/200000438-6e40e6e40f/700/bl%C3%A5%2018%2016%20%282%29.webp?ph=9f530f7639"/>
+		</div>
+
+	</div>
+
+</div>
+	<div --data-name="midnight" class="w3-hide w3-auto">
+	<h1 class="w3-center">Miss Midnight K ox</h1>
+	<div class="w3-row-padding">
+		<div class="w3-col m4 l4">
+			<img class="w3-image" src="https://9f530f7639.clvaw-cdnwnd.com/a470909b67f02e0297289554e1606271/200000429-4de0e4de10/700/HZ2A1042.webp?ph=9f530f7639"/>
+			<p>Id nummer OX 6145</p>
+			<p>Født 08-05-2019</p>
+			<p>Type arabisk fuldblod</p>
+			<p>Opdrætter Lone Pockendahl</p>
+			<p>Avlsforbund OX</p>
+			<p>Far ML KAZAKHSTAN OX</p>
+			<p>Mor JAMEELA SAFFANAH OX</p>
+			<p>Morfar NEO OX </p>
+		</div>
+		<div class="w3-col m4 l4">
+			<img class="w3-image" src="https://9f530f7639.clvaw-cdnwnd.com/a470909b67f02e0297289554e1606271/200000486-33bd933bdc/mmk2.webp?ph=9f530f7639"/>
+			<p>Født 8. maj 2019 på Kastaniegård</p>
+			<p>Miss Midnight er et føl, der er lavet ud af en drøm. Hendes Mor Jameela Safannah var den mest fantastiske araberhoppe, der kunne have gået til månen i distance, hvis ikke en skade på det ene ben, havde stoppet hendes karriere. Derfor avlede vi Midnight med Kazakhstan som far. Hun er en bestemt dame, ikke bange for noget, men med en vilje af stål.</p>
+		</div>
+		<div class="w3-col m4 l4">
+			<img class="w3-image" src="https://9f530f7639.clvaw-cdnwnd.com/a470909b67f02e0297289554e1606271/200000651-0ea480ea4a/roset%20k%C3%A5ring.webp?ph=9f530f7639"/>
+			<p>Midnight er d. 13-5 2022 ifolet ved Noupier AA.</p>
+			<p>Midnight folede 5-4 2023 Croupier Smart K AA (hingst)</p>
+			<p>28-3 2024 blev Midnight kåret i DSAH med samlet 8. Og med 9 i type.</p>
+		</div>
+	</div>
+</div>
+	<div --data-name="tarikh" class="w3-hide w3-auto">
+	<h1 class="w3-center">Tarikh</h1>
+
+	<div class="w3-row-padding">
+
+		<div class="w3-col m4 l4">
+			<img class="w3-image" src="https://9f530f7639.clvaw-cdnwnd.com/a470909b67f02e0297289554e1606271/200000409-c9cc8c9ccb/_SIP9628-web.webp?ph=9f530f7639"/>
+
+				<p>Id nummer 208333201703917</p>
+				<p>Født 01-06-2017 </p>
+				<p>Tarikh er en ægte fuldblodsaraber, men der gik koks i registreringen, der hvor vi hentede ham og derfor er han med grønt pas.</p>
+				<p>Hans far hedder: Atlantis vb (Altis/WH Justice  Krystalinah/Ecaho) </p>
+				<p>og hans mor hedder: Eminensia (Lissar/Gazal al Shaqab x Exessa/Perm/Eldon).</p>
+		</div>
+
+		<div class="w3-col m4 l4">
+			<img class="w3-image" src="https://9f530f7639.clvaw-cdnwnd.com/a470909b67f02e0297289554e1606271/200000411-bb840bb843/_SIP9581-web-1.webp?ph=9f530f7639"/>
+			<p>Resultater og Kvalifikationer</p>
+			<p>2024 4-5 Odsherred intro 13 km med Christina</p>
+			<p>2023 12-8 Hedeland LA 55 km gnf</p>
+			<p>2023 1-7 Mols LA 60 km gnf</p>
+			<p>2023  11-6 Rom LB 43 gnf.</p>
+			<p>2022 15-10 Nordslesvigske LA 55 km gnf. </p>
+			<p>2022 9-10 Odsherred Intro med Maja 14 km</p>
+			<p>2022 Nyminderidtet 43 km LB gennemført med Silas</p>
+		</div>
+
+		<div class="w3-col m4 l4">
+			<img class="w3-image" src="https://9f530f7639.clvaw-cdnwnd.com/a470909b67f02e0297289554e1606271/200000407-180d9180db/700/_SIP9846-web.webp?ph=9f530f7639"/>
+			<p>Pointgivende km: 256</p>
+			<p>ikkepointgivende km 27 </p>
+			<p>andre resultater</p>
+			<p>Kval. MA</p>
+		</div>
+
+	</div>
+
+</div>
+	<div --data-name="jalva" class="w3-hide w3-auto">
+	<h1 class="w3-center">Tornhøjs Jalva</h1>
+
+	<div class="w3-row-padding">
+		<div class="w3-col m4 l4">
+			<img class="w3-image" src="https://9f530f7639.clvaw-cdnwnd.com/a470909b67f02e0297289554e1606271/200000635-17b7317b75/jalva1.webp?ph=9f530f7639"/>
+			<p>Id nummer 208333FJ1500600</p>
+			<p>Født 25-04-2015</p>
+			<p>Type Hest</p>
+			<p>Opdrætter Ditte og Dennis Bisgaard</p>
+			<p>Avlsforbund Fjordhest</p>
+			<p>Far MOSEGÅRDENS IVANHOE</p>
+			<p>Mor KASTANJEGÅRDENS LÆRKE</p>
+			<p>Morfar ORION HALSNÆS</p>
+		</div>
+		<div class="w3-col m4 l4">
+			<img class="w3-image" src="https://d1di2lzuh97fh2.cloudfront.net/files/1r/1ro/700/1ro4z2.jpg?ph=9f530f7639"/>
+			<p>Vi har lånt Jalva af Jeannette. Jalva er en 9 årig fjordhest og en hoppe. Hun skal indgå i rytterskolen :) Jalva ankom 17-3 24</p>
+		</div>
+		<div class="w3-col m4 l4">
+			<img class="w3-image" src="https://9f530f7639.clvaw-cdnwnd.com/a470909b67f02e0297289554e1606271/200000637-91d2d91d2f/jalva2.webp?ph=9f530f7639"/>
+			<p>2024 4-5 Odsherred intro 13 km med Linn</p>
+		</div>
+	</div>
+
+</div>
+	<div --data-name="cheyenne" class="w3-hide w3-auto">
+	<h1 class="w3-center">Cheyenne</h1>
+	<div class="w3-row-padding">
+		<div class="w3-col m4 l4">
+			<img class="w3-image" src="https://9f530f7639.clvaw-cdnwnd.com/a470909b67f02e0297289554e1606271/200000707-b0b17b0b1a/700/cheyenne2.webp?ph=9f530f7639"/>
+			<p>Id nummer 208333201703615</p>
+			<p>Født 03-08-2017</p>
+			<p>Type Pony</p>
+			<p>Mor: Pony/araber/quarter</p>
+			<p>Far: American Paint  </p>
+			<p>Opdrætter Jannie Olesen</p>
+			<p>Avlsforbund Landsudvalget for Heste </p>
+		</div>
+		<div class="w3-col m4 l4">
+			<img class="w3-image" src="https://9f530f7639.clvaw-cdnwnd.com/a470909b67f02e0297289554e1606271/200000709-e3136e3137/700/cheyenne1.webp?ph=9f530f7639"/>
+		</div>
+		<div class="w3-col m4 l4">
+			<img class="w3-image" src="https://9f530f7639.clvaw-cdnwnd.com/a470909b67f02e0297289554e1606271/200000711-769f3769f5/cheyenne4.webp?ph=9f530f7639"/>
+		</div>
+	</div>
+</div>
+
+</div>
+
+<script>
+const btns = document.getElementById("horse-btns")
+const tabs = document.getElementById("horse-tabs")
+for (let c of btns.children) {
+	c.onclick = showHorse.bind(null, [c.attributes["--data-name"].value])
+}
+function showHorse(name) {
+	for (let c of btns.children) {
+		c.classList.remove("w3-green")
+	}
+	btns.querySelector(`[--data-name="${name}"]`)?.classList.add("w3-green")
+	for (let c of tabs.children) {
+		c.classList.add("w3-hide")
+	}
+	tabs.querySelector(`[--data-name="${name}"]`)?.classList.remove("w3-hide")
+	document.location.hash = name
+}
+showHorse(document.location.hash.substring(1) || "boy")
+
+var slideIndex = 1;
+showDivs(slideIndex);
+
+function plusDivs(n) {
+  showDivs(slideIndex += n);
+}
+
+function showDivs(n) {
+  var i;
+  var x = document.querySelectorAll(".slideshow > img");
+  if (n > x.length) {slideIndex = 1}
+  if (n < 1) {slideIndex = x.length} ;
+  for (i = 0; i < x.length; i++) {
+    x[i].style.display = "none";
+  }
+  x[slideIndex-1].style.display = "block";
+}
+
+</script>
+
+<style>
+
+.slideshow > img {
+	z-index: 2;
+	display: none;
+	width: 100%;
+}
+
+</style>
+		<div class="w3-padding-64 w3-center">
+	<h2>Fair Riding - Great Teamwork - Trust Life</h2>
+</div>
+<footer class="w3-black w3-padding w3-center">
+	<p>Kastaniegård Horse Team</p>
+	<p>
+		<i class="fa fa-location-dot"></i>
+		<a href="https://maps.app.goo.gl/vja1hK6fqW6rR64g9">
+			Kvægholm 16, 4281 Gørlev, Danmark
+		</a>
+	</p>
+	<p>
+		<i class="fa fa-phone"></i>
+		<a href="tel:23203381">+45 23203881</a>
+	</p>
+	<p>
+		<i class="fa fa-envelope"></i>
+		<a href="mailto:kastaniegaard@live.dk">kastaniegaard@live.dk</a>
+	</p>
+</footer>
+	</body>
+</html>
