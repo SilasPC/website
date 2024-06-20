@@ -1,5 +1,6 @@
 src_dir: src
 out_dir: out
+dump: dump
 global_args: {}
 exclude_render:
 - component/

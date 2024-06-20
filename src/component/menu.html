@@ -22,8 +22,8 @@
 
 <div>
 	<!--div id="navbar-backdrop" style="min-height: 120px;"-->
-		<div id="navbar">
-			<div class="w3-bar">
+		<div id="navbar" class="w3-card-4">
+			<div class="w3-bar w3-card-2">
 				<a href="/index.html" class="w3-button w3-bar-item">Hjem</a>
 				<div class="w3-dropdown-hover">
 					<button class="w3-button">Vi tilbyder</button>
@@ -79,7 +79,7 @@
 <script>
 
 	let loc = decodeURI(document.location.pathname)
-	if (loc = "/") loc = "/index.html"
+	if (loc == "/") loc = "/index.html"
 	for (let el of document.querySelectorAll("#navbar a").values()) {
 		if (loc == el.attributes.href.value) {
 			el.classList.add("w3-green")

@@ -46,7 +46,7 @@ def render(p, **kwargs):
 	try:
 		y = sources[p]
 	except:
-		raise Exception(f"No such source file {p}")
+		raise Exception(f"No such source file '{p}'")
 	while True:
 		match = next(re.finditer(r"\{\{(.*)\}\}", y), None)
 		if match:
@@ -60,7 +60,7 @@ def render(p, **kwargs):
 		else:
 			break
 	while True:
-		match = next(re.finditer(r"\{(!)?(%+)([\s\S]*)\2\}", y), None)
+		match = next(re.finditer(r"\{(!)?(%+)([\s\S]*?)\2\}", y), None)
 		if match:
 			try:
 				code = match.group(3).strip()
@@ -79,7 +79,12 @@ def render(p, **kwargs):
 					else:
 						output = eval(code, data)
 				except:
-					print("evaluation error")
+					print("evaluation error:")
+					if "dump" in cfg:
+						dump = Path(cfg["dump"])
+						if not dump.exists():
+							dump.write_text(y)
+							print("dumped")
 					raise
 				(s,e) = match.span()
 				y = y[:s] + str(output) + y[e:]
@@ -89,6 +94,9 @@ def render(p, **kwargs):
 		else:
 			break
 	return y
+
+if "dump" in cfg:
+	Path(cfg["dump"]).unlink(missing_ok=True)
 
 for p in sources.keys():
 	no_render = False

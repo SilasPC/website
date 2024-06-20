@@ -1,13 +1,9 @@
-<!DOCTYPE html>
-<html>
-	{{ component/head.html }}
-	<body>
-
-		{{ component/header.html }}
-		{{ component/menu.html }}
-		<div class="parallax" style="background-image: url('https://9f530f7639.clvaw-cdnwnd.com/a470909b67f02e0297289554e1606271/200000647-c3314c3315/_SIP9328-web.webp?ph=9f530f7639');"></div>
-
-		{% render("content/prisliste.html", prices=eval(read_file("prisliste.py"))) %}
-		{{ component/footer.html }}
-	</body>
-</html>
+{!%
+output = render(
+	"component/page.html",
+	content_str=render(
+		"content/prisliste.html",
+		prices=eval(read_file("prisliste.py"))
+	)
+)
+%}
