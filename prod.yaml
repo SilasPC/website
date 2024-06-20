@@ -1,0 +1,7 @@
+src_dir: src
+out_dir: ../public_html
+global_args: {}
+exclude_render:
+- component/
+- content/
+- heste/
