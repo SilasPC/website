@@ -115,5 +115,5 @@ for p in sources.keys():
 		print(e)
 		sys.exit(1)
 
-Path(out_dir, "static").unlink(missing_ok=True)
-Path(out_dir, "static").symlink_to(Path("static").absolute(), target_is_directory=True)
+Path(out_dir, "assets").unlink(missing_ok=True)
+Path(out_dir, "assets").symlink_to(Path("static/assets").absolute(), target_is_directory=True)
