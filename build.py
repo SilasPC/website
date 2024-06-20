@@ -20,10 +20,10 @@ def read_yaml(f):
 	with open(f) as f:
 		return yaml.safe_load(f)
 
-cfg = read_yaml(sys.argv[1] if len(sys.argv) > 1 else "build.yaml")
+cfg = read_yaml(sys.argv[1] + ".yaml" if len(sys.argv) > 1 else "build.yaml")
 
-out_dir=cfg["out_dir"]
-src_dir=cfg["src_dir"]
+out_dir = Path(cfg["out_dir"])
+src_dir = Path(cfg["src_dir"])
 
 sources = dict()
 def read_srcs(dir):
@@ -80,8 +80,8 @@ def render(p, **kwargs):
 						output = eval(code, data)
 				except:
 					print("evaluation error:")
-					if "dump" in cfg:
-						dump = Path(cfg["dump"])
+					if "dump_file" in cfg:
+						dump = Path(cfg["dump_file"])
 						if not dump.exists():
 							dump.write_text(y)
 							print("dumped")
@@ -95,8 +95,18 @@ def render(p, **kwargs):
 			break
 	return y
 
-if "dump" in cfg:
-	Path(cfg["dump"]).unlink(missing_ok=True)
+if "dump_file" in cfg:
+	Path(cfg["dump_file"]).unlink(missing_ok=True)
+
+if "clear_output" in cfg and cfg["clear_output"]:
+	for file in out_dir.iterdir():
+		if file.is_file():
+			file.unlink()
+			continue
+		#if file.is_dir():
+
+if "pre_build" in cfg:
+	exec(cfg["pre_build"])
 
 for p in sources.keys():
 	no_render = False
@@ -115,5 +125,5 @@ for p in sources.keys():
 		print(e)
 		sys.exit(1)
 
-Path(out_dir, "assets").unlink(missing_ok=True)
-Path(out_dir, "assets").symlink_to(Path("static/assets").absolute(), target_is_directory=True)
+if "post_build" in cfg:
+	exec(cfg["post_build"])

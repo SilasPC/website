@@ -1,8 +1,17 @@
 src_dir: src
 out_dir: out
+clear_ouput: True
 dump: dump
 global_args: {}
 exclude_render:
 - component/
 - content/
 - heste/
+post_build: |
+  from pathlib import Path
+  Path("out/assets").unlink(missing_ok=True)
+  for file in Path("static").iterdir():
+    outfile = Path("out", file.name)
+    if outfile.is_file():
+      outfile.unlink(missing_ok=True)
+    outfile.symlink_to(file.absolute(), target_is_directory=file.is_dir())

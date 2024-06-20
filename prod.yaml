@@ -1,5 +1,6 @@
 src_dir: src
 out_dir: ../public_html
+clear_ouput: True
 global_args: {}
 exclude_render:
 - component/
