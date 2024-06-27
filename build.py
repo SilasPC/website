@@ -25,6 +25,9 @@ cfg = read_yaml(sys.argv[1] + ".yaml" if len(sys.argv) > 1 else "build.yaml")
 out_dir = Path(cfg["out_dir"])
 src_dir = Path(cfg["src_dir"])
 
+def read_dir(dir):
+	return [f for f in listdir(join(src_dir, dir)) if isfile(join(src_dir, dir, f))]
+
 sources = dict()
 def read_srcs(dir):
 	for f in listdir(join(src_dir, dir)):
@@ -38,7 +41,7 @@ def read_srcs(dir):
 read_srcs("")
 
 def read_file(f):
-	with open(f) as f:
+	with open(join(src_dir,f)) as f:
 		return f.read()
 
 def render(p, **kwargs):
@@ -68,6 +71,7 @@ def render(p, **kwargs):
 					"render": render,
 					"read_file": read_file,
 					"read_yaml": read_yaml,
+					"read_dir": read_dir,
 					"this": p,
 					"output": "",
 					"args": dotdict(kwargs),
@@ -111,7 +115,7 @@ if "pre_build" in cfg:
 for p in sources.keys():
 	no_render = False
 	for exclude in cfg["exclude_render"]:
-		if p.startswith(exclude):
+		if re.match(exclude, p) :
 			no_render = True
 			break
 	if no_render: continue
