@@ -77,4 +77,17 @@
 
 	</style>
 
+	<script>
+		var parallaxElements = []
+		addEventListener("load", () => {
+			parallaxElements.push(...document.querySelectorAll(".parallax[parallax-scale]"))
+		})
+		addEventListener("scroll", () => {
+			for (let e of parallaxElements) {
+				let s = e.attributes["parallax-scale"].value
+				e.style.backgroundPositionY = `-${scrollY / s}px`
+			}
+		})
+	</script>
+
 </head>

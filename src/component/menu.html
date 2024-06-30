@@ -89,12 +89,12 @@
 
 	const scrollHeader = document.getElementById("navbar")
 	const offsetTop = scrollHeader.offsetTop
-	window.onscroll = () => {
+	addEventListener("scroll", () => {
 		if (window.pageYOffset > offsetTop) {
 			scrollHeader.classList.add("sticky")
 		} else {
 			scrollHeader.classList.remove("sticky")
 		}
-	}
+	})
 
 </script>
