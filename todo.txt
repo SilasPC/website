@@ -2,4 +2,3 @@
 distanceridning
 - rytterteam
  - klippekort
-resultater

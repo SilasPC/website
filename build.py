@@ -9,16 +9,25 @@ import sys
 from os.path import isfile, join
 import io
 from contextlib import redirect_stdout
+import toml
 
 class dotdict(dict):
     """dot.notation access to dictionary attributes"""
-    __getattr__ = dict.get
+    def __getattr__(self, key):
+        val = self.get(key)
+        if isinstance(val, dict):
+            val = dotdict(val)
+        return val
     __setattr__ = dict.__setitem__
     __delattr__ = dict.__delitem__
 
 def read_yaml(f):
 	with open(f) as f:
-		return yaml.safe_load(f)
+		return dotdict(yaml.safe_load(f))
+
+def read_toml(f):
+	with open(f) as f:
+		return dotdict(toml.load(f))
 
 cfg = read_yaml(sys.argv[1] + ".yaml" if len(sys.argv) > 1 else "build.yaml")
 
@@ -71,6 +80,7 @@ def render(p, **kwargs):
 					"render": render,
 					"read_file": read_file,
 					"read_yaml": read_yaml,
+					"read_toml": read_toml,
 					"read_dir": read_dir,
 					"this": p,
 					"output": "",

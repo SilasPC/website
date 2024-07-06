@@ -1,0 +1,36 @@
+#!/bin/sh
+set -e
+if [ "$#" -ne 2 ]; then
+	echo "Move and symlink a file."
+   echo "Usage: mvln <file> <target>"
+	exit 1
+fi
+original="$1" target="$2"
+if [ ! -f "$original" ]; then
+	echo "Not a file"
+	exit 1
+fi
+name=$(basename "$original")
+if [ ! -e "$target" ]; then
+	case "$target" in
+		*/)
+			mkdir -p "$target"
+			;;
+		*)
+			mkdir -p $(dirname "$target")
+			;;
+	esac
+fi
+if [ -d "$target" ]; then
+	case "$target" in
+		*/)
+  			target="$target${name}"
+			;;
+		*)
+  			target="$target/${name}"
+			;;
+	esac
+fi
+# sympath=$(realpath -s --relative-to=$(dirname "$original") "$target")
+mv "$original" "$target"
+ln -rs "$target" "$original"

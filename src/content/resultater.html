@@ -1,0 +1,74 @@
+
+<div id="content">
+
+	<br/>
+
+{!%
+fallback_image = "https://9f530f7639.clvaw-cdnwnd.com/a470909b67f02e0297289554e1606271/200000442-3536f35372/450/20525362_507092002967477_2602760666438556886_n.webp?ph=9f530f7639"
+data = read_toml("src/content/resultater.toml")
+results = data.results
+results.sort(reverse=True, key=lambda t: t["date"])
+
+last_year = results[0]["date"].year
+output = ""
+def add_sec():
+	global output
+	output += f"""
+	<section>
+		<div class="w3-auto w3-padding-32">
+			<h1 class="w3-center">Resultater {last_year}</h1>
+			<div class="flex-container">
+	"""
+def close_sec():
+	global output
+	output += "</div>"
+	if thing := data.get(str(last_year)):
+		if footer := thing.get("footer"):
+			output += f"""<p class="w3-panel w3-serif w3-leftbar w3-border-blue">{footer}</p>"""
+	output += f"""
+		</div>
+	</section>
+	"""
+add_sec()
+for result in results:
+	year = result["date"].year
+	if last_year != year:
+		last_year = year
+		close_sec()
+		add_sec()
+	text = "<br/>".join(result.get("text","").strip().split("\n"))
+	output += f"""
+	<div class="flex-item w3-padding w3-center" style="width: 300px; flex-basis: 300px;">
+		<img class="w3-image avatar" src="{result.get("url", fallback_image)}"/>
+		<p style="margin-bottom: 0;">{result["date"]}</p>
+		<h3 style="margin-top: 0;"><b>{result["name"]}</b></h3>
+		<hr/>
+		<p>{text}</p>
+	</div>
+	"""
+close_sec()
+%}
+
+</div>
+
+<style>
+	.flex-container {
+		display: flex;
+		justify-content: center;
+		flex-wrap: wrap;
+	}
+	.avatar {
+		margin: 0 auto;
+		width: 30%;
+		aspect-ratio: 1;
+		object-fit: cover;
+		border-radius: 50%;
+	}
+	#content {
+		background-color: var(--bg-dark);
+		color: white;
+	}
+	#content section:nth-child(odd) {
+		background-color: rgba(0, 0, 0, 0.14);
+	}
+</style>

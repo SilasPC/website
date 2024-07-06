@@ -1,0 +1,281 @@
+
+# keys: date, name, url, text
+
+[2022]
+footer = "Vores fokus 2022 er på et godt år med mindre præstation, fokus på de unge heste og mere team-spirit og rideglæde <3"
+
+[[results]]
+date = 2024-05-04
+name = "Odsherreds intro"
+text = """
+Odsherreds Intro
+Lone/Boy Boy intro
+Maja R/Legolas intro
+Irene L/Racing Devil intro
+Christina/Tarikh intro
+Linn/Tornhøjs Jalva intro
+"""
+
+[[results]]
+date = 2024-05-25
+name = "Nordslesvigske"
+text = """
+Lone Tarikh LB afbrudt ridt
+Marie/Race LA 55 km
+Maja/Magic LA 55 km
+Linn/Geronimo LA 55 km
+"""
+
+[[results]]
+date = 2024-06-22
+name = "Rom"
+
+[[results]]
+date = 2024-07-13
+name = "Mols Bjerge"
+
+[[results]]
+date = 2024-09-28
+name = "Odsherred"
+
+[[results]]
+date = 2024-11-02
+name = "Blåbjerg"
+
+# 2023
+
+[[results]]
+date = 2023-09-09
+name = "Sæddingegård"
+text = """
+(LB) 9. september
+Linn /Geronimo LB gnf
+Maja/Magic LB gnf
+"""
+
+[[results]]
+date = 2023-08-26
+name = "Holbergridtet"
+text = """
+Marie/Race intro
+Maja/Magic intro
+"""
+
+[[results]]
+date = 2023-08-12
+name = "Hedelandsridtet"
+text = """
+Marie/Tarikh LA
+Maja W/Magic LA
+Linn/Geronimo LB
+"""
+
+[[results]]
+date = 2023-07-01
+name = "Mols bjerge"
+text = """
+Marie/Tarikh LA gnf
+Maja W/Forever Magic LB gnf
+"""
+
+[[results]]
+date = 2023-06-17
+name = "Odsherreds intro"
+text = """
+Linn/ Geronimo
+Cecillie/Legolas
+Maja W/ Magic
+Lucas/Olivia
+"""
+
+[[results]]
+date = 2023-06-10
+name = "Rom"
+text = """
+Linn/Geronimo LB gnf
+Maja H/ Tarikh LB gnf
+"""
+
+[[results]]
+date = 2023-05-20
+name = "Vestegnsridtet"
+text = """
+Rikke/Legolas LC gnf
+Linn/Geronimo LB gnf
+Marie/Tarikh LB gnf
+Maja W/Magic LB udgik
+"""
+
+[[results]]
+date = 2023-04-22
+name = "Sorø intro"
+text = """
+Lone/Marlon udgik
+Lucas/Legolas gnf
+Maja W/Forever Magic gnf
+Maja H/Geronimo gnf
+"""
+
+[[results]]
+date = 2023-04-15
+name = "Nordslesvigske"
+text = """
+Lone/Marlon LB 44
+Marie W/Forever Magic LB 44
+"""
+
+[[results]]
+date = 2023-04-01
+name = "Valdemarskilde"
+text = """
+Maja/Tarikh
+Maja W/Magic
+Lucas/Legolas
+Linn/Geronimo
+"""
+
+[[results]]
+date = 2023-03-25
+name = "Vester bjørnkær"
+text = """
+Silas/Tarikh LB udgik
+Lucas/Forever Magic LB nr. 2
+"""
+
+[[results]]
+date = 2023-03-12
+name = "Kronborgridtet"
+text = """
+Silas/Magic LC gnf
+Lucas/Legolas LC gnf
+"""
+
+[[results]]
+date = 2022-03-26
+name = "Vester Bjørnkær"
+url = "/assets/lone/noname.webp?ph=9f530f7639"
+text="""
+Lone/Legolas LB gennemført
+"""
+
+[[results]]
+date = 2022-04-03
+name = "Holbergridtet "
+url = "/assets/hest/zynergi/vinter.webp?ph=9f530f7639"
+text="""
+Maja H/Legolas Gnf.
+Lone/Marlon B ox  Gnf.
+"""
+
+[[results]]
+date = 2022-04-16
+name = "Åskov Ridtet"
+url = "/assets/silas/stævne.webp?ph=9f530f7639"
+text="""
+Lone/Racing Devil LB Førsteplads 14.2 km/t
+"""
+
+[[results]]
+date = 2022-04-23
+name = "Hedeland introridt"
+url = "/assets/silas/aidah.webp?ph=9f530f7639"
+text="""
+Rikke/Amazing
+Maja W/Magic
+MajaH/Legolas
+Lone/Marlon
+"""
+
+[[results]]
+date = 2022-05-08
+name = "Vestskoven"
+url = "https://9f530f7639.clvaw-cdnwnd.com/a470909b67f02e0297289554e1606271/200000455-6a6736a676/249262330_991850598059616_4670098466523277293_n.webp?ph=9f530f7639"
+text="""
+Lone/Race nr. 3 LB
+"""
+
+[[results]]
+date = 2022-06-05
+name = "Skive Ridtet"
+url = "/assets/lone-silas-stævne.webp?ph=9f530f7639"
+text="""
+Lone/Marlon LB 47 km nr. 2 12.38 i snit
+"""
+
+[[results]]
+date = 2022-06-11
+url = "/assets/silas/marlon.webp?ph=9f530f7639"
+name = "Show i tyskland"
+text = "Fremvisning af HO Dijkstra ox"
+
+[[results]]
+date = 2022-07-16
+name = "Københavner Ridtet"
+url = "/assets/silas/hippoaden.webp?ph=9f530f7639"
+text="""
+Marie/Race udgik
+Lone/ Magic nr. 4
+Silas/Zynergi nr. 5
+"""
+
+[[results]]
+date = 2022-08-20
+name = "Hedeland"
+url = "/assets/silas/race-hedeland.webp?ph=9f530f7639"
+text="""
+LLA Silas/Zynergi gnf
+LA Lone/Marlon  dis
+LCMaja H/Legolas  gnf
+"""
+
+[[results]]
+date = 2022-08-27
+name = "Nyminde Ridtet"
+url = "/assets/silas/marlon-blåbjerg.webp?ph=9f530f7639"
+text="""
+LB Silas/Tarikh
+LB Lone/Magic
+"""
+
+[[results]]
+date = 2022-09-10
+name = "Sæddingegård Ridtet"
+url = "/assets/silas/sip/marlon2.webp?ph=9f530f7639"
+text="""
+Lone/Race gnf. LB 45 km
+"""
+
+[[results]]
+date = 2022-09-17
+name = "Ranum Ridtet"
+url = "/assets/lone/noname2.webp?ph=9f530f7639"
+text="""
+Silas/Tarikh
+Lone/Magic blev hjemme gr hoste
+"""
+
+[[results]]
+date = 2022-10-09
+name = "Odsherred intro"
+url = "/assets/lone-silas-stævne2.webp?ph=9f530f7639"
+text="""
+MajaH/Tarikh
+MajaW/Magic
+Linn/Legolas
+"""
+
+[[results]]
+date = 2022-10-16
+name = "Nordslesvigske"
+url = "https://9f530f7639.clvaw-cdnwnd.com/a470909b67f02e0297289554e1606271/200000395-df981df984/DSC_0459%20%282%29.webp?ph=9f530f7639"
+text="""
+LA Lone/Marlon
+LA Silas/Tarikh
+"""
+
+
+
+
+
+
+
