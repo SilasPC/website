@@ -22,8 +22,10 @@ def add_sec():
 def close_sec():
 	global output
 	output += "</div>"
-	if thing := data.get(str(last_year)):
-		if footer := thing.get("footer"):
+	thing = data.get(str(last_year))
+	if thing:
+		footer = thing.get("footer")
+		if footer:
 			output += f"""<p class="w3-panel w3-serif w3-leftbar w3-border-blue">{footer}</p>"""
 	output += f"""
 		</div>
