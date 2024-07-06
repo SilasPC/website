@@ -6,3 +6,11 @@ exclude_render:
 - component/
 - content/
 - heste/
+post_build: |
+  from pathlib import Path
+  Path("../public_html/assets").unlink(missing_ok=True)
+  for file in Path("static").iterdir():
+    outfile = Path("../public_html", file.name)
+    if outfile.is_file():
+      outfile.unlink(missing_ok=True)
+    outfile.symlink_to(file.absolute(), target_is_directory=file.is_dir())
