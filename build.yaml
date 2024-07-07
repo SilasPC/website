@@ -9,10 +9,7 @@ exclude_render:
 - heste/
 - .*\.py
 post_build: |
+  from os import system
   from pathlib import Path
-  Path("out/assets").unlink(missing_ok=True)
   for file in Path("static").iterdir():
-    outfile = Path("out", file.name)
-    if outfile.is_file():
-      outfile.unlink(missing_ok=True)
-    outfile.symlink_to(file.absolute(), target_is_directory=file.is_dir())
+    system(f"ln -srf static/{file.name} out/{file.name}")
