@@ -12,4 +12,6 @@ post_build: |
   from os import system
   from pathlib import Path
   for file in Path("static").iterdir():
-    system(f"ln -srf static/{file.name} out/{file.name}")
+    cmd = f"ln -srf static/{file.name} out/{file.name}"
+    print(cmd)
+    system(cmd)
