@@ -1,12 +1,13 @@
 src_dir: src
 out_dir: out
-clear_ouput: True
+clear_output: True
 dump: dump
 global_args: {}
 exclude_render:
 - component/
 - content/
 - heste/
+- nav/
 - .*\.py
 post_build: |
   from os import system

@@ -4,7 +4,7 @@ import re
 from pathlib import Path
 from os.path import relpath
 import yaml
-from os import listdir, path
+from os import listdir, path, system
 import sys
 from os.path import isfile, join
 import io
@@ -107,11 +107,9 @@ if "dump_file" in cfg:
 	Path(cfg["dump_file"]).unlink(missing_ok=True)
 
 if "clear_output" in cfg and cfg["clear_output"]:
-	for file in out_dir.iterdir():
-		if file.is_file():
-			file.unlink()
-			continue
-		#if file.is_dir():
+	cmd = f"rm -rf {out_dir}/*"
+	print(cmd)
+	system(cmd)
 
 if "pre_build" in cfg:
 	exec(cfg["pre_build"])

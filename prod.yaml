@@ -1,11 +1,13 @@
 src_dir: src
 out_dir: ../public_html
-clear_ouput: True
+clear_output: True
 global_args: {}
 exclude_render:
 - component/
 - content/
 - heste/
+- nav/
+- .*\.py
 post_build: |
   from os import system
   from pathlib import Path
