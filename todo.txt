@@ -2,3 +2,5 @@
 - rytterteam
 
 https://pagespeed.web.dev/analysis/https-kstg-dk/16da9z7paa?form_factor=mobile
+
+ssh -p 33 kstgdk@cp08.nordicway.dk
