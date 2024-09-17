@@ -1,0 +1,32 @@
+
+<button
+	class="w3-button w3-black w3-text-black"
+	onclick="edit(this)"
+	style="position: absolute;right:0;transform: translate(0,-100%);"
+>Redigér</button>
+
+<script>
+function edit(el) {
+	el.innerHTML = "Eksporter"
+	el.classList.remove("w3-black", "w3-text-black")
+	el.classList.add("w3-green", "w3-hover-white")
+	el.onclick = save.bind(window, el)
+	var els = document.querySelectorAll("[edit]")
+	for (let el of els) {
+		el.contentEditable = true
+		el.style.display = "inline-block"
+		el.beforeEdit = el.innerHTML;
+	}
+function save(el) {
+	el.innerHTML = "Redigér"
+	el.onclick = edit.bind(window, el)
+	var els = document.querySelectorAll("[edit]")
+	for (let el of els) {
+		el.contentEditable = false
+		if (el.beforeEdit != el.innerHTML) {
+			window.alert(el.attributes.edit.value + "\n\n" + el.innerHTML)
+		}
+	}
+}
+}
+</script>

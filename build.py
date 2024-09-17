@@ -29,6 +29,12 @@ cfg = read_yaml(sys.argv[1] + ".yaml" if len(sys.argv) > 1 else "build.yaml")
 out_dir = Path(cfg["out_dir"])
 src_dir = Path(cfg["src_dir"])
 
+def md2html(f):
+	import markdown
+	with open(join(src_dir,f)) as f:
+		return markdown.markdown(f.read())
+
+
 def read_dir(dir):
 	return [f for f in listdir(join(src_dir, dir)) if isfile(join(src_dir, dir, f))]
 
@@ -48,6 +54,7 @@ def read_file(f):
 	with open(join(src_dir,f)) as f:
 		return f.read()
 
+_root = ""
 def render(p, **kwargs):
 	y = None
 	try:
@@ -76,7 +83,9 @@ def render(p, **kwargs):
 					"read_file": read_file,
 					"read_yaml": read_yaml,
 					"read_dir": read_dir,
+					"md2html": md2html,
 					"this": p,
+					"href": "/" + _root,
 					"output": "",
 					"args": dotdict(kwargs),
 				}
@@ -122,6 +131,7 @@ for p in sources.keys():
 			break
 	if no_render: continue
 	try:
+		_root = p
 		res = render(p)
 		path = join(out_dir, p)
 		Path(path).parent.mkdir(parents=True, exist_ok=True)
