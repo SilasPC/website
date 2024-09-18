@@ -6,27 +6,15 @@
 >Redigér</button>
 
 <script>
+var editor = null
 function edit(el) {
-	el.innerHTML = "Eksporter"
-	el.classList.remove("w3-black", "w3-text-black")
-	el.classList.add("w3-green", "w3-hover-white")
-	el.onclick = save.bind(window, el)
-	var els = document.querySelectorAll("[edit]")
-	for (let el of els) {
-		el.contentEditable = true
-		el.style.display = "inline-block"
-		el.beforeEdit = el.innerHTML;
+	if (!editor) {
+		editor = new W3Editor(cfg)
+		editor.setup()
 	}
-function save(el) {
-	el.innerHTML = "Redigér"
-	el.onclick = edit.bind(window, el)
-	var els = document.querySelectorAll("[edit]")
-	for (let el of els) {
-		el.contentEditable = false
-		if (el.beforeEdit != el.innerHTML) {
-			window.alert(el.attributes.edit.value + "\n\n" + el.innerHTML)
-		}
-	}
-}
+	el.remove()
 }
 </script>
+<script src="editor.js"></script>
+<script src="w3editor.js"></script>
+<script src="editor_cfg.js"></script>
