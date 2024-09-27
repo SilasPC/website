@@ -67,7 +67,7 @@ async function listAssets(dir = "/assets") {
 		.then(response => response.text())
 		.then(str => new DOMParser().parseFromString(str, "text/html"))
 	let files = [...doc.querySelectorAll("li a")]
-		.map(f => [dir + "/" + f.attributes.href.value, f.innerText, f.attributes.filetype.value == "dir"])
+		.map(f => [dir + "/" + f.attributes.href.value, f.innerText, f.parentElement.attributes.filetype.value == "dir"])
 	return files
 }
 
