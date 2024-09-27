@@ -6,7 +6,7 @@
 					$files = scandir("./");
 					foreach ($files as $file) {
 						$type = is_dir($file) ? "dir" : "file";
-						print("<li><a href=\"$file\"><$type>$file</$type></a></li>\n");
+						print("<li filetype=\"$type\"><a href=\"$file\">$file</a></li>\n");
 					}
 				?>
 			</ul>
