@@ -114,6 +114,16 @@ function colorBtn(f, val) {
 	return div
 }
 
+function renameNode(el, newName) {
+	let newNode = document.createElement(newName.toUpperCase())
+	newNode.replaceChildren(...el.children)
+	el.replaceWith(newNode)
+
+	newNode.classList = el.classList
+	newNode.attributes = el.attributes
+	return newNode
+}
+
 function swapPrevSibling(el) {
 	let prev = el.previousElementSibling
 	let parent = el.parentElement
@@ -124,11 +134,16 @@ function swapPrevSibling(el) {
 }
 
 function listDecorator(el) {
-	let dec = html`<div><button>##</button></div>`
+	let dec = html`<div><button>Type</button></div>`
 	dec.firstChild.onclick = () => {
-		let newNode = document.createElement(el.nodeName == "UL" ? "OL" : "UL")
-		newNode.replaceChildren(...el.children)
-		el.replaceWith(newNode)
+		switch (el.nodeName) {
+			case "OL":
+				el = renameNode(el, "UL")
+				break;
+			case "UL":
+				el = renameNode(el, "OL")
+				break;
+		}
 	}
 	return dec
 }
@@ -136,13 +151,13 @@ function listDecorator(el) {
 const cfg = {
 	elementQuery: "[editable]",
 	stopQuery: "[noedit]",
-	layoutBaseQuery: "div",
-	avoidExit: false,
+	layoutBaseQuery: "div,section",
+	avoidExit: true,
 	decoratorHeight: 32,
-	basicStyles: ["code", "b", "i", "h1", "h2", "h3", "h4","a"],
+	basicStyles: ["p", "code", "b", "i", "h1", "h2", "h3", "h4", "a"],
 	insertable: {
 		"ul": (el) => txt`<ul><li>${el}</li></ul>`,
-		"ol": (el) => txt`<ol><li>${el}</li></ol>`,
+		"dl": `<dl><dt></dt><dd></dd></dl>`,
 		"img": `<img class="w3-image" src="https://images.freeimages.com/fic/images/icons/949/token/256/word_processor.png"/>`,
 		"hr": `<hr/>`,
 	},
@@ -155,6 +170,11 @@ const cfg = {
 			let button = div.querySelector("button")
 			button.onclick = () => removeNode(el)
 			return div
+		},
+		"li": (el) => {
+			let dec = html`<span><button>Up</button></span>`
+			dec.children[0].onclick = () => swapPrevSibling(el)
+			return dec
 		},
 		"img": assetSelector,
 		"ul": listDecorator,

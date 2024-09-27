@@ -64,8 +64,7 @@ class Editor {
 		addEventListener("paste", this.#handlePaste.bind(this))
 		addEventListener("click", this.#handleClick.bind(this))
 		this.#mutationObserver = new MutationObserver((records) => {
-			this.#makeEditable(container)
-			this.#findLayoutElements(container)
+			this.#analyze(container)
 			this.#redecorate()
 			if (this.onChange) this.onChange()
 		})
@@ -76,8 +75,7 @@ class Editor {
 	setup() {
 		if (!this.#isInit) {
 			this.clean(true)
-			this.#makeEditable(this.#container)
-			this.#findLayoutElements(this.#container)
+			this.#analyze(this.#container)
 			for (let el of this.#editableElements) {
 				this.#mutationObserver.observe(el, {"subtree": true, "childList": true})
 			}
@@ -126,6 +124,11 @@ class Editor {
 			d.remove()
 		}
 		this.#decorators.clear()
+	}
+
+	#analyze(container) {
+		this.#findLayoutElements(container)
+		this.#makeEditable(container)
 	}
 
 	#makeEditable(container) {
@@ -458,8 +461,7 @@ class Editor {
 			if (!range) return null
 			el = this._wrapSelection(el, range)
 			if (!el) return null
-			this.#findLayoutElements(el.parentElement)
-			this.#makeEditable(el.parentElement)
+			this.#analyze(el.parentElement)
 			if (setTarget) {
 				this.#setTargetElement(el)
 				el.focus()
@@ -476,8 +478,7 @@ class Editor {
 	insertNode(el, setTarget = true) {
 		el = this.#insertNode(el)
 		if (el) {
-			this.#findLayoutElements(el.parentElement)
-			this.#makeEditable(el.parentElement)
+			this.#analyze(el.parentElement)
 			if (setTarget) {
 				this.#setTargetElement(el)
 				el.focus()

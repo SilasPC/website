@@ -1,20 +1,24 @@
 
 <header class="w3-padding w3-text-white" style="background-color: rgb(136, 50, 50);">
-	<div class="w3-bar w3-display-container">
-		<h2 style="display: inline-block;">
-			<object style="vertical-align: middle;height: 2.5em; width: 2.5em;" data="/assets/kastanie.svg?color=ab7f69" type="image/svg+xml"></object>
-			<span class="w3-hide-small w3-hide-medium">
-				Kastaniegård
-			</span>
-			<span>
-				Trailer & Transport
-			</span>
-		</h2>
-		<div class="w3-right vcenter" style="right:0;">
-			<span class="w3-hide-small">
-				{{ component/nav.html }}
-			</span>
-			<button class="w3-button w3-hover-none w3-bar-item w3-hide-medium w3-hide-large" onclick="toggleSideBar()">Menu</button>
+	<div class="w3-cell-row">
+		<div class="w3-cell">
+			<h2 style="display: inline-block;">
+				<object style="vertical-align: middle;height: 2.5em; width: 2.5em;" data="/assets/kastanie.svg?color=ab7f69" type="image/svg+xml"></object>
+				<span class="w3-hide-small w3-hide-medium">
+					Kastaniegård
+				</span>
+				<span>
+					Trailer & Transport
+				</span>
+			</h2>
+		</div>
+		<div class="w3-cell w3-cell-middle">
+			<div class="w3-right" style="right:0;">
+				<span class="w3-hide-small">
+					{{ component/nav.html }}
+				</span>
+				<button class="w3-button w3-hover-none w3-bar-item w3-hide-medium w3-hide-large" onclick="toggleSideBar()">Menu</button>
+			</div>
 		</div>
 	</div>
 </header>
