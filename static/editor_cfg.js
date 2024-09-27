@@ -48,6 +48,58 @@ function btnsDecorator(...btns) {
 	}
 }
 
+function uploadImg(filePath, img = document.createElement("IMG")) {
+	let reader = new FileReader()
+	if (!img) img = editor.insertNode("img")
+	if (!img) return
+	img.classList.add("w3-image")
+	reader.addEventListener(
+		"load", () => {
+			img.src = reader.result;
+		},
+		false,
+	);
+	reader.readAsDataURL(filePath);
+}
+
+async function listAssets(dir = "/assets") {
+	let doc = await fetch(dir)
+		.then(response => response.text())
+		.then(str => new DOMParser().parseFromString(str, "text/html"))
+	let files = [...doc.querySelectorAll("li a")]
+		.map(f => [dir + "/" + f.attributes.href.value, f.innerText, f.attributes.filetype.value == "dir"])
+	return files
+}
+
+async function updateAssetSelector(select, img, dir = "/assets") {
+	select.onchange = () => {
+		let [href, _, dir] = fs[select.value]
+		if (dir) {
+			updateAssetSelector(select, img, href)
+		} else {
+			img.src = href
+		}
+	}
+	let fs = await listAssets(dir)
+	select.replaceChildren()
+	select.appendChild(html`<option selected disabled>${dir}</option>`)
+	for (let [i, [_,name,__]] of Object.entries(fs)) {
+		let option = document.createElement("OPTION")
+		option.value = i
+		option.innerText = name
+		select.appendChild(option)
+	}
+}
+
+function assetSelector(el) {
+	let span = html`<span><select></select><input type="file"></input></span>`
+	let select = span.querySelector("select")
+	updateAssetSelector(select, el)
+	let input = span.querySelector("input")
+	input.onchange = () => uploadImg(input.files[0], el)
+	return span
+}
+
 function colorBtn(f, val) {
 	let div = document.createElement("SPAN")
 	let b = document.createElement("INPUT")
@@ -74,42 +126,36 @@ function swapPrevSibling(el) {
 const cfg = {
 	elementQuery: "[editable]",
 	stopQuery: "[noedit]",
-	onUpload(event) {
-		let input = event.target
-		let reader = new FileReader()
-		reader.addEventListener(
-			"load", () => {
-				let img = document.createElement("IMG")
-				img.src = reader.result;
-				img.classList.add("w3-image")
-				editor.insertNode(img)
-				input.value = ""
-			},
-			false,
-		);
-		reader.readAsDataURL(input.files[0]);
-	},
+	layoutBaseQuery: "div",
+	avoidExit: false,
+	decoratorHeight: 32,
 	basicStyles: ["code", "b", "i", "h1", "h2", "h3", "h4","a"],
 	insertable: {
-		"ul": `<ul><li></li></ul>`,
-		"ol": `<ol><li></li></ol>`,
+		"ul": (el) => txt`<ul><li>${el}</li></ul>`,
+		"ol": (el) => txt`<ol><li>${el}</li></ol>`,
+		"img": `<img class="w3-image" src="https://images.freeimages.com/fic/images/icons/949/token/256/word_processor.png"/>`,
 		"hr": `<hr/>`,
 	},
 	decorators: {
 		"a": (el) => {
-			let input = document.createElement("INPUT")
+			let div = html`<span><input></input><button>X</button></span>`
+			let input = div.querySelector("input")
 			input.value = el.href
 			input.onchange = () => el.href = input.value
-			return input
-		}
+			let button = div.querySelector("button")
+			button.onclick = () => removeNode(el)
+			return div
+		},
+		"img": assetSelector,
 	},
 	layout: {
 		"panel": {
 			query: ".w3-panel",
 			create(el) {
-				return `<div class="w3-panel w3-margin w3-padding" style="border-left: 6px solid blue;">${
-					el?.outerHTML ?? "<p></p>"
-				}</div>`
+				return txt`
+					<div class="w3-panel w3-margin w3-padding" style="border-left: 6px solid blue;">
+						${el ?? "<p></p>"}
+					</div>`
 			},
 			decorator: btnsDecorator(
 				["Delete", removeNode],
@@ -119,13 +165,17 @@ const cfg = {
 		"card": {
 			query: ".w3-card-4",
 			create(el) {
-				return `<div class="w3-card-4 w3-round w3-padding w3-margin">${el?.outerHTML ?? "<p></p>"}</div>`
+				return txt`
+					<div class="w3-card-4 w3-round w3-padding w3-margin">
+						${el ?? "<p></p>"}
+					</div>`
 			},
 			decorator: btnsDecorator(
 				["Delete", removeNode],
 				["Round", el => rotClasses(el, "w3-round w3-round-large w3-round-xlarge")],
 				["Padding", el => rotClasses(el, "w3-padding w3-padding-32 w3-padding-64")],
 				["Margin", el => rotClasses(el, "w3-margin")],
+				["Inline", el => rotClasses(el, "w3-show-inline-block")],
 				["Align", el => rotClasses(el, "w3-center w3-right-align")],
 				el => colorBtn(c => el.style.backgroundColor = c, el.style.backgroundColor)
 			)
@@ -133,7 +183,7 @@ const cfg = {
 		"col": {
 			hidden: true,
 			query: ".w3-col",
-			html: `<div editable class="w3-col w3-padding w3-third"></div>`,
+			// html: `<div editable class="w3-col w3-padding w3-third"></div>`,
 			decorator: btnsDecorator(
 				["Delete", el => {
 					if (el.innerText.trim().length == 0 || confirm("Delete coloumn? All content is lost")) {
@@ -147,6 +197,7 @@ const cfg = {
 				["1/2", el => setClasses(el, "w3-col w3-padding w3-half")],
 				["1/3", el => setClasses(el, "w3-col w3-padding w3-third")],
 				["2/3", el => setClasses(el, "w3-col w3-padding w3-twothird")],
+				["Rest", el => setClasses(el, "w3-col w3-padding w3-rest")],
 				["<<", swapPrevSibling],
 				["Align", el => rotClasses(el, "w3-center w3-right-align")],
 			),
@@ -154,7 +205,7 @@ const cfg = {
 		"container": {
 			query: ".w3-container",
 			create(el) {
-				return `<div class="w3-container">${el?.outerHTML ?? ""}</div>`
+				return txt`<div class="w3-container">${el}</div>`
 			},
 			decorator: btnsDecorator(
 				["Delete", removeNode],
@@ -162,7 +213,27 @@ const cfg = {
 				["Round", el => rotClasses(el, "w3-round w3-round-large w3-round-xlarge")],
 				["Padding", el => rotClasses(el, "w3-padding w3-padding-32 w3-padding-64")],
 				["Margin", el => rotClasses(el, "w3-margin")],
+				["Inline", el => rotClasses(el, "w3-show-inline-block")],
 				["Align", el => rotClasses(el, "w3-center w3-right-align")],
+				el => colorBtn(c => el.style.backgroundColor = c, el.style.backgroundColor)
+			)
+		},
+		"bar": {
+			query: ".w3-bar",
+			uneditable: true,
+			html: `<div class="w3-bar"></div>`,
+			decorator: btnsDecorator(
+				["Delete", el => el.remove()],
+				["Add item", el => el.appendChild(html`<div editable class="w3-bar-item"></div>`)],
+				el => colorBtn(c => el.style.backgroundColor = c, el.style.backgroundColor)
+			)
+		},
+		"bar-item": {
+			query: ".w3-bar-item",
+			hidden: true,
+			decorator: btnsDecorator(
+				["Delete", removeNode],
+				["Side", el => rotClasses(el, "w3-right")],
 				el => colorBtn(c => el.style.backgroundColor = c, el.style.backgroundColor)
 			)
 		},

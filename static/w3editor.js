@@ -1,14 +1,38 @@
 
+function html(strs, ...els) {
+	let t = document.createElement("template")
+	t.innerHTML = txt(strs, ...els)
+	return t.content.children[0]
+}
+
+function txt(strs, ...els) {
+	if (typeof strs == "string") return strs
+	els = els.map(e => {
+		if (e instanceof Element) return e.outerHTML
+		if (e instanceof DocumentFragment) {
+			let el = document.createElement("SPAN")
+			el.appendChild(e)
+			return el.innerHTML
+		}
+		return e?.wholeText ?? e ?? ""
+	})
+	return strs.map((v,i) => v + (els[i]?.outerHTML ?? els[i]?.wholeText ?? els[i] ?? "")).join("")
+}
+
 /// Editor based around w3css
+/// Saving is done by downloading the html contents of the edited areas
 class W3Editor extends Editor {
 
 	#injected = []
 
 	constructor(cfg) {
 		super(cfg)
-		window.onbeforeunload = () => this.isInit && this.getDiff().length > 0
+		addEventListener("onebeforeunload", e => {
+			if (this.cfg.avoidExit && this.isInit && this.getDiff().length > 0)
+				e.preventDefault()
+		})
 		this.#createInputBar()
-		let style = html(`
+		let style = html`
 			<style>
 				[contenteditable=true] {
 					border: 1px solid blue;
@@ -16,14 +40,15 @@ class W3Editor extends Editor {
 				[contenteditable=false]:not([decorator]) {
 					border: 1px solid red;
 				}
-				[contenteditable] * {
+				[contenteditable=true] *:not(hr) {
 					min-height: 32px;
 					min-width: 32px;
 				}
-				[contenteditable] :empty {
+				[contenteditable=true] :empty:not(hr) {
 					border: 1px solid purple;
 				}
 				[decorator], [decorator] * {
+					z-index: 100
 					user-select: none;
 					-moz-user-select: none;
 					-khtml-user-select: none;
@@ -31,7 +56,7 @@ class W3Editor extends Editor {
 					-o-user-select: none;
 				}
 			</style>
-		`)
+		`
 		this.#injected.push(style)
 		document.head.appendChild(style)
 	}
@@ -82,7 +107,9 @@ class W3Editor extends Editor {
 			let b = document.createElement("BUTTON")
 			setClasses(b, "w3-bar-item w3-button")
 			b.innerText = k
-			b.onclick = () => this.insertNode(v)
+			b.onclick = () => {
+				this.wrapOrInsert(v)
+			}
 			bar1.appendChild(b)
 		}
 		for (let [k, v] of Object.entries(this.cfg.layout)) {
@@ -99,12 +126,7 @@ class W3Editor extends Editor {
 		let bar2 = document.createElement("div")
 		barCard.appendChild(bar2)
 		setClasses(bar2, "w3-bar")
-		let b = document.createElement("INPUT")
-		setClasses(b, "w3-bar-item w3-button")
-		b.type = "file"
-		b.onchange = (event) => this.cfg.onUpload(event)
-		bar2.appendChild(b)
-		b = document.createElement("BUTTON")
+		let b = document.createElement("BUTTON")
 		setClasses(b, "w3-bar-item w3-button")
 		b.innerText = "Save"
 		b.onclick = () => this.save()

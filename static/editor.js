@@ -75,6 +75,7 @@ class Editor {
 	#isInit = false
 	setup() {
 		if (!this.#isInit) {
+			this.clean(true)
 			this.#makeEditable(this.#container)
 			this.#findLayoutElements(this.#container)
 			for (let el of this.#editableElements) {
@@ -82,6 +83,17 @@ class Editor {
 			}
 			this.#isInit = true
 		}
+	}
+
+	teardown() {
+		this.#mutationObserver.disconnect()
+		this.#editableElements.clear()
+		this.#undecorate()
+		for (let el of this.#container.querySelectorAll("[contenteditable]")) {
+			el.removeAttribute("contenteditable")
+			delete el[this.#elKey]
+		}
+		this.#isInit = false
 	}
 
 	getDiff() {
@@ -138,8 +150,7 @@ class Editor {
 		}
 	}
 
-	style(nodeName) { return this.#style(nodeName) }
-	#style(nodeName) {
+	style(nodeName) {
 		nodeName = nodeName.toUpperCase()
 		var selection = window.getSelection();
 		if (selection.isCollapsed) return;
@@ -154,15 +165,18 @@ class Editor {
 		const startContainerNode = this.#isInside(range.startContainer, nodeName);
 		const endContainerNode = this.#isInside(range.endContainer, nodeName);
 		if (startContainerNode !== false || endContainerNode !== false) {
-			// both range container nodes are part of the same node
+			// both ends inside a `nodeName`
 			if (startContainerNode === endContainerNode) {
+				console.log("remove common")
 				this.#removeNode(startContainerNode);
 			}
 			else {
+				console.log("remove start")
 				// remove start container node
 				if (startContainerNode !== false) {
 					this.#removeNode(startContainerNode);
 				}
+				console.log("remove end")
 				// remove end container node
 				if (endContainerNode !== false) {
 					this.#removeNode(endContainerNode);
@@ -174,12 +188,14 @@ class Editor {
 			// e.g. "Hello <strong>World</strong>!", if we would just surround the selection, the <strong>s would be nested like "<strong>Hello <strong>World</strong>!</strong>", which works, but isn't pretty, so we remove all nodes of the same type that are fully within the selection
 			for (let i = 0; i < range.commonAncestorContainer.childNodes.length; ++i) {
 				if (range.commonAncestorContainer.childNodes[i].nodeName === nodeName) {
+					console.log("remove child")
 					this.#removeNode(range.commonAncestorContainer.childNodes[i]);
 				}
 			}
 
 			var newNode = document.createElement(nodeName);
 			newNode.appendChild(range.extractContents());
+			console.log("extract/replace", newNode, range)
 			range.insertNode(newNode);
 		}
 
@@ -188,6 +204,9 @@ class Editor {
 
 	}
 
+	#withinEditableRegion(node, local = true) {
+		return this.#inEditableRegion(node?.parentElement, local)
+	}
 	/// Returns true if the nodes contents is editable.
 	/// Also true when the node is the editable container.
 	/// By default returns false in inter-editable regions.
@@ -236,9 +255,7 @@ class Editor {
 		if (this.#inEditableRegion(event.target, false)) {
 			this.#setTargetElement(event.target)
 			if (this.onChangeTarget) this.onChangeTarget()
-		} else if (["BUTTON","INPUT"].includes(event.target.nodeName)) {
-
-		} else {
+		} else if (!this.#findMatchingParent(event.target, "[decorator]")) {
 			this.targetElement = null
 			this.#undecorate();
 			this.clean();
@@ -270,17 +287,18 @@ class Editor {
 				}
 			}
 			if (!dec) continue
-			dec = this._toElement(dec)
+			dec = this.#toElement(dec)
 			let bb = el.getBoundingClientRect()
 			dec.contentEditable = false
 			dec.setAttribute("decorator", "")
 			let top = bb.top + scrollY
-			if (lastTop - top < 32) {
-				top = lastTop - 32
+			let h = this.cfg.decoratorHeight = 32
+			if (lastTop - top < h) {
+				top = lastTop - h
 			}
 			lastTop = top
 			dec.style.position = "absolute"
-			dec.style.top = top -32 + "px"
+			dec.style.top = top - h + "px"
 			dec.style.left = bb.left + scrollX + "px"
 			document.body.appendChild(dec)
 			this.#decorators.add(dec)
@@ -294,7 +312,7 @@ class Editor {
 	}
 
 	*#traversePath(el) {
-		let outsideRegion = !this.#inEditableRegion(el.parentElement)
+		let outsideRegion = !this.#withinEditableRegion(el)
 		while (el) {
 			let l = el[this.#layoutKey]
 			if (l) {
@@ -311,55 +329,46 @@ class Editor {
 	}
 
 	/// Cleans up some nasty html
-	clean(recurse = false) {
-		let changed = false
-		for (let container of this.#editableElements) {
-			container.innerHTML = container.innerHTML.replaceAll("&nbsp;", " ");
-			for (let el of container.querySelectorAll("div:has(br:nth-child(2):last-child),div:has(br:only-child)")) {
-				if (el.classList.length == 0 && el.attributes.length == 0) {
+	clean(repeat = false) {
+		let changed
+		do {
+			changed = false
+			for (let container of this.#editableElements) {
+				container.innerHTML = container.innerHTML.replaceAll("&nbsp;", " ");
+				for (let el of container.querySelectorAll("div:empty:has(br:nth-child(2):last-child),div:empty:has(br:only-child)")) {
+					if (el.classList.length == 0 && el.attributes.length == 0) {
+						changed = true
+						console.log("clean 1", el.outerHTML)
+						el.replaceWith(el.childNodes[0])
+					}
+				}
+				for (let el of container.querySelectorAll("div:empty")) {
+					if (el.classList.length == 0 && el.attributes.length == 0) {
+						changed = true
+						console.log("clean 2", el.outerHTML)
+						el.remove()
+					}
+				}
+				for (let el of container.querySelectorAll("p:has(>br:only-child),div:has(>br:only-child)")) { // p:empty:not(:has(*))
 					changed = true
+					console.log("clean 3", el.outerHTML)
 					el.replaceWith(el.childNodes[0])
 				}
 			}
-			for (let el of container.querySelectorAll("div:empty")) {
-				if (el.classList.length == 0 && el.attributes.length == 0) {
-					changed = true
-					el.remove()
-				}
-			}
-			for (let el of container.querySelectorAll("p:has(>br:only-child)")) { // p:empty:not(:has(*))
-				changed = true
-				el.remove()
-			}
-		}
-		if (recurse && changed) this.clean(true)
+		} while (changed && repeat)
 	}
 
+	/// Place layout element at/around selection
 	createLayOutElement(name) {
-		let selection = window.getSelection();
-		if (selection.rangeCount === 0) return null;
-		let range = selection.getRangeAt(0);
-		let contentNode = range.commonAncestorContainer
-		if (!(contentNode instanceof Element)) {
-			contentNode = contentNode.parentElement
-		}
-		if (!this.#inEditableRegion(contentNode)) {
-			return null
-		}
-		let l = this.cfg.layout[name]
-
-		// let con = this.#findMatchingParent(contentNode, `:not(p,${this.cfg.basicStyles})`)
-		// if (!this.#inEditableRegion(con)) return null
-
-		if (selection.type == "Range") {
-			if (l.create) {
-				let el = this._toElement(l.create(contentNode))
-				if (el) {
-					contentNode.replaceWith(el)
-				}
+		let layout = this.cfg.layout[name]
+		let range = this.#splitExpandToLayoutBase()
+		if (!range) return
+		if (!range.collapsed) {
+			if (layout.create) {
+				return this._wrapSelection((el) => layout.create(el), range)
 			}
 		} else {
-			return this.#insertNode(l.html ?? l.create(null))
+			return this.#insertNode(layout.html ?? layout.create(null))
 		}
 		return null
 	}
@@ -369,6 +378,90 @@ class Editor {
 		if (node.matches(selector)) return node
 		return this.#findMatchingParent(node.parentElement, selector)
 	}
+
+	#findMatchingParent2(node, selector) {
+		if (!node || !node.parentElement) return null
+		if (node.parentElement.matches(selector)) return node
+		return this.#findMatchingParent2(node.parentElement, selector)
+	}
+
+	/// Given a range like <b>ab[cd<i>ef]gh</i>ij</b>
+	/// The goal is produce something like <b>ab<i>cd</i></b> [<b>cd<i>ef</i></b>] <b><i>gh</i>ij</b>
+	/// Thus spliting the formatting, such that we may wrap the range in a layout element
+	/// For at range like <b>[hello]</b>] we should expand to [<b>hello</b>]
+	#splitExpandToLayoutBase(r = getSelection().getRangeAt(0)) {
+		if (!r) return null
+		// todo: check we are not splitting something we should not
+		if (!this.#inEditableRegion(r.commonAncestorContainer)) {
+			return null
+		}
+
+		let changed = true, con = r.commonAncestorContainer
+		while (changed && !r.collapsed) {
+			changed = false
+			con = r.commonAncestorContainer
+			if (con instanceof Text) {
+				if (r.startOffset == 0 && con.length == r.endOffset) {
+					console.log("expand text")
+					r.setStartBefore(con)
+					r.setEndAfter(con)
+					changed = true
+				} else {
+					// only part of text is selected
+					break
+				}
+			}
+			else if (con instanceof Element) {
+				if (!con.matches(this.cfg.layoutBaseQuery)) {
+					if (r.startOffset == 0 && con.childNodes.length == r.endOffset) {
+						console.log("expand element")
+						r.setStartBefore(con)
+						r.setEndAfter(con)
+						changed = true
+					} else {
+						// only part of element is selected
+						break
+					}
+				}
+			}
+		}
+		if (con instanceof Element && con.matches(this.cfg.layoutBaseQuery)) {
+			console.log(r)
+			return r
+		}
+		let n = this.#findMatchingParent2(con, this.cfg.layoutBaseQuery)
+		console.log("matching", n, con)
+		if (!n) return null
+		let ic = r.extractContents()
+		r.setStartBefore(n)
+		r.insertNode(r.extractContents())
+		r.collapse(false)
+		r.insertNode(ic)
+		return r
+	}
+
+	wrapOrInsert(el) {
+		let range = getSelection().getRangeAt(0)
+		if (range.collapsed) {
+			range = this.#splitExpandToLayoutBase(range)
+			if (!range) return null
+			el = this.insertNode(el)
+		} else if (el instanceof Function) {
+			range = this.#splitExpandToLayoutBase(range)
+			if (!range) return null
+			el = this._wrapSelection(el, range)
+			if (!el) return null
+			this.#findLayoutElements(el.parentElement)
+			this.#makeEditable(el.parentElement)
+			if (setTarget) {
+				this.#setTargetElement(el)
+				el.focus()
+			}
+		}
+		if (el) this.clean(true)
+		return el
+	}
+
 
 	/// Inserts element, tag or html at cursor
 	/// Will fail and return null with an active cursor selection
@@ -388,7 +481,7 @@ class Editor {
 
 	/// Inserts element, tag or html at cursor
 	#insertNode(el) {
-		el = this._toElement(el)
+		el = this.#toElement(el)
 		var selection = window.getSelection();
 		if (selection.rangeCount === 0) return null;
 		var range = selection.getRangeAt(0);
@@ -406,6 +499,20 @@ class Editor {
 		return null
 	}
 
+	/// Wrap range using a function
+	_wrapSelection(f, range = window.getSelection().getRangeAt(0)) {
+		if (range.collapsed) return null
+		if (!this.#inEditableRegion(range.commonAncestorContainer)) {
+			console.log("not editable")
+			return null
+		}
+		let content = range.extractContents()
+		let wrapper = f(content)
+		if (wrapper) wrapper = this.#toElement(wrapper)
+		range.insertNode(wrapper ?? content)
+		return wrapper
+	}
+
 	#removeNode(node) {
 		let parent = node.parentElement;
 		for ( let i = 0 ; i < parent.childNodes.length ; ++i ) {
@@ -419,19 +526,11 @@ class Editor {
 		}
 	}
 
-	teardown() {
-		this.#mutationObserver.disconnect()
-		this.#editableElements.clear()
-		this.#undecorate()
-		for (let el of this.#container.querySelectorAll("[contenteditable]")) {
-			el.removeAttribute("contenteditable")
-			delete el[this.#elKey]
-		}
-		this.#isInit = false
-	}
-
 	/// Convert tagnames, snippets and DocumentFragments to Element's
-	_toElement(el) {
+	#toElement(el) {
+		if (el instanceof Function) {
+			el = el(null)
+		}
 		if (typeof el == "string") {
 			if (el.trimStart().startsWith("<")) {
 				let t = document.createElement("template")
@@ -442,15 +541,11 @@ class Editor {
 			}
 		}
 		if (el instanceof DocumentFragment) {
-			el = el.childNodes[0]
+			let span = document.createElement("SPAN")
+			span.appendChild(el)
+			return span
 		}
 		return el
 	}
 
-}
-
-function html(innerHTML) {
-	let t = document.createElement("template")
-	t.innerHTML = innerHTML
-	return t.content.children[0]
 }
