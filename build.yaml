@@ -10,9 +10,12 @@ exclude_render:
 - nav/
 - .*\.py
 post_build: |
-  from os import system
+  from os import system, walk
+  from shutil import copy2
   from pathlib import Path
   for file in Path("static").iterdir():
     cmd = f"ln -srf static/{file.name} out/{file.name}"
     print(cmd)
     system(cmd)
+  for (dir,_,_) in walk("static"):
+    copy2("index.php",dir)
