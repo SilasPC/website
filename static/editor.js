@@ -202,7 +202,7 @@ class Editor {
 			range.insertNode(newNode);
 		}
 
-		selection.empty();
+		// selection.empty();
 		this.clean();
 
 	}

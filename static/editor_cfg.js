@@ -154,7 +154,7 @@ const cfg = {
 	layoutBaseQuery: "div,section",
 	avoidExit: true,
 	decoratorHeight: 32,
-	basicStyles: ["p", "code", "b", "i", "h1", "h2", "h3", "h4", "a"],
+	basicStyles: ["code", "b", "i", "h1", "h2", "h3", "h4", "a"],
 	insertable: {
 		"ul": (el) => txt`<ul><li>${el}</li></ul>`,
 		"dl": `<dl><dt></dt><dd></dd></dl>`,
