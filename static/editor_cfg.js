@@ -123,6 +123,16 @@ function swapPrevSibling(el) {
 	parent.insertBefore(el, prev)
 }
 
+function listDecorator(el) {
+	let dec = html`<div><button>##</button></div>`
+	dec.firstChild.onclick = () => {
+		let newNode = document.createElement(el.nodeName == "UL" ? "OL" : "UL")
+		newNode.replaceChildren(...el.children)
+		el.replaceWith(newNode)
+	}
+	return dec
+}
+
 const cfg = {
 	elementQuery: "[editable]",
 	stopQuery: "[noedit]",
@@ -147,6 +157,8 @@ const cfg = {
 			return div
 		},
 		"img": assetSelector,
+		"ul": listDecorator,
+		"ol": listDecorator,
 	},
 	layout: {
 		"panel": {

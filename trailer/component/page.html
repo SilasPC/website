@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="dk">
+	{{ component/head.html }}
+	<body>
+
+		{{ component/header.html }}
+		<section editable="{% args.content %}">
+			{% render(args.content) if args.content else "" %}
+			{% args.content_str if args.content_str else "" %}
+		</section>
+		{{ component/footer.html }}
+	</body>
+</html>

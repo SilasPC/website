@@ -1,4 +1,4 @@
-src_dir: src_trailer
+src_dir: trailer
 out_dir: out
 clear_ouput: True
 dump: dump
@@ -14,3 +14,4 @@ post_build: |
     if outfile.is_file():
       outfile.unlink(missing_ok=True)
     outfile.symlink_to(file.absolute(), target_is_directory=file.is_dir())
+  Path("out/assets").symlink_to(Path("assets").absolute(), target_is_directory=True)

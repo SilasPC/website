@@ -345,13 +345,20 @@ class Editor {
 				for (let el of container.querySelectorAll("div:empty")) {
 					if (el.classList.length == 0 && el.attributes.length == 0) {
 						changed = true
-						console.log("clean 2", el.outerHTML)
+						console.log("clean empty div", el.outerHTML)
 						el.remove()
+					}
+				}
+				for (let el of container.querySelectorAll("div")) {
+					if (el.classList.length == 0 && el.attributes.length == 0) {
+						changed = true
+						console.log("clean pure div", el.outerHTML)
+						this.#removeNode(el)
 					}
 				}
 				for (let el of container.querySelectorAll("p:has(>br:only-child),div:has(>br:only-child)")) { // p:empty:not(:has(*))
 					changed = true
-					console.log("clean 3", el.outerHTML)
+					console.log("clean contained br", el.outerHTML)
 					el.replaceWith(el.childNodes[0])
 				}
 			}

@@ -1,0 +1,20 @@
+
+<button
+	class="w3-button w3-black w3-text-black"
+	onclick="edit(this)"
+	style="position: absolute;right:0;transform: translate(0,-100%);"
+>Redigér</button>
+
+<script>
+var editor = null
+function edit(el) {
+	if (!editor) {
+		editor = new W3Editor(cfg)
+		editor.setup()
+	}
+	el.remove()
+}
+</script>
+<script src="editor.js"></script>
+<script src="w3editor.js"></script>
+<script src="editor_cfg.js"></script>

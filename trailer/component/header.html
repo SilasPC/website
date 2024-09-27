@@ -1,0 +1,46 @@
+
+<header class="w3-padding w3-text-white" style="background-color: rgb(136, 50, 50);">
+	<div class="w3-bar w3-display-container">
+		<h2 style="display: inline-block;">
+			<object style="vertical-align: middle;height: 2.5em; width: 2.5em;" data="/assets/kastanie.svg?color=ab7f69" type="image/svg+xml"></object>
+			<span class="w3-hide-small w3-hide-medium">
+				Kastaniegård
+			</span>
+			<span>
+				Trailer & Transport
+			</span>
+		</h2>
+		<div class="w3-right vcenter" style="right:0;">
+			<span class="w3-hide-small">
+				{{ component/nav.html }}
+			</span>
+			<button class="w3-button w3-hover-none w3-bar-item w3-hide-medium w3-hide-large" onclick="toggleSideBar()">Menu</button>
+		</div>
+	</div>
+</header>
+
+<div id="sidebar" class="w3-padding w3-sidebar w3-center w3-bar-block w3-card-4" style="right:0;display:none;">
+	<object style="height: 100px; width: 100px;" data="/assets/kastanie.svg?color=ab7f69" type="image/svg+xml"></object>
+	{{ component/nav.html }}
+</div>
+
+<style>
+	header {
+		position: sticky;
+		z-index: 10;
+		top: 0;
+	}
+	header * {
+		transition: color linear 0.15s;
+	}
+	header .w3-button:hover {
+		color: var(--gold) !important;
+	}
+</style>
+
+<script>
+function toggleSideBar() {
+	let el = document.getElementById("sidebar")
+	el.style.display = el.style.display == "block" ? "none" : "block"
+}
+</script>
